@@ -1,0 +1,13 @@
+﻿@model ExperimentApp.Models.Participant
+
+@{
+    ViewBag.Title = "Start";
+}
+
+<div>
+    <p></p>
+    <h2 class="lead">--Explanation--</h2>
+    <p></p>
+    <p>@Html.ActionLink("Play Video", "Video", "Home", new { id = Model.ID}, null)</p>
+</div>
+

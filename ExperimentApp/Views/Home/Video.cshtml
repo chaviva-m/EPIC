@@ -1,0 +1,84 @@
+﻿@model ExperimentApp.Models.Participant
+
+@{
+    ViewBag.Title = "Video";
+}
+
+<div>
+    <h2>Video</h2>
+
+    <button onclick="playVideo()">
+        Play
+    </button><br /><br />
+</div>
+
+<video controls="controls" id="videoPlayer">
+    <source src="@Url.Action("GetVideo", "Home", new {em = Model.EmotionalContent})" type="video/mp4">
+</video>
+
+<script type="text/javascript">
+    function isFullScreenAvailable() {
+        return (
+            document.fullscreenEnabled ||
+            document.webkitFullscreenEnabled ||
+            document.mozFullScreenEnabled ||
+            document.msFullscreenEnabled
+        );
+    }
+    function requestFullScreen(elementToRequest) {
+        if (elementToRequest.requestFullScreen) {
+            elementToRequest.requestFullScreen();
+        }
+        else if (elementToRequest.webkitRequestFullscreen) {
+            elementToRequest.webkitRequestFullscreen();
+        }
+        else if (elementToRequest.mozRequestFullScreen) {
+            elementToRequest.mozRequestFullScreen();
+        }
+        else if (elementToRequest.msRequestFullscreen) {
+            elementToRequest.msRequestFullscreen();
+        }
+    }
+
+    var videoElement = document.getElementById('videoPlayer');
+    function makeVideoFullScreen() {
+        if (isFullScreenAvailable) {
+            requestFullScreen(videoElement);
+            return;
+        }
+        alert("Sorry full screen is not available in this browser");
+    }
+    function playVideo() {
+        makeVideoFullScreen()
+        videoElement.play();
+        return;
+    }
+    videoElement.addEventListener('ended', myHandler, false);
+    function myHandler(e) {
+        window.location.href = '@Url.Action("EndVideoRecording")';
+    }
+
+    $("#camera").webcam({
+        width: 320,
+        // other options etc.
+        debug: function (type, message) {
+            if (message === "Camera started") { window.webcam.started = true; }
+        }
+    });
+    function capture_image() {
+        if (!webcam.started) { alert("hey, camera not started"); }
+    }
+    $("#camera").webcam({
+        width: 320,
+        // other options etc.
+        debug: function (type, string) {
+            if (string === "Camera started") {
+                window.webcam.started = true;
+                if (window.webcam.onStarted) { window.webcam.onStarted(); }
+            }
+        }
+    });
+    window.webcam.onStarted = function () {
+        alert("Whey, the webcam started");
+    };
+</script>

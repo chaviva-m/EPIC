@@ -1,0 +1,60 @@
+﻿@model ExperimentApp.Models.Participant
+
+@{
+    //we might want to change the name of this view to something like questionnaire
+    ViewBag.Title = "Questionnaire";
+}
+
+<h2>שאלון דיווח</h2>
+
+<h4>
+    השאלון הבא מורכב ממספר מילים שמתארות רגשות שונים. ציינ/י ליד כל רגש עד כמה הרגשת אותו בזמן הצפייה בסרטון:   1- מעט מאוד/כלל לא, 5- הרבה מאוד
+</h4>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+<div class="form-horizontal">
+    <table class="table">
+        <tr>
+            <th>
+                רגש
+            </th>
+            <th>
+
+            </th>
+            @{
+                foreach (var item in Model.SelfReportEmotions.First().Options)
+                {
+                    <th>
+                        @item
+                    </th>
+                }
+            }
+        </tr>
+        @{
+            foreach (var item in Model.SelfReportEmotions)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Emotion)
+                    </td>
+                    <td></td>
+                    @foreach (var opt in item.Options)
+                    {
+                        <td>
+                            @Html.RadioButtonFor(modelItem => item.EmotionStrength, opt, new { @style = "margin: 1em 1em 1em 0;transform: scale(1.8, 1.8);-moz-transform: scale(1.8, 1.8);-ms-transform: scale(1.8, 1.8);-webkit-transform: scale(1.8, 1.8);-o-transform: scale(1.8, 1.8);" })
+                            @Html.ValidationMessageFor(modelItem => item.EmotionStrength, "", new { @class = "text-danger" })
+                        </td>
+                    }
+                </tr>
+            }
+        }
+    </table>
+    <div class="form-group">
+        <div class="col-md col-md-10">
+            <input type="submit" value="Submit" class="btn btn-default" />
+        </div>
+    </div>
+</div>
+ }

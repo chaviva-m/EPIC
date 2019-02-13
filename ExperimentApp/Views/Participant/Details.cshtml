@@ -1,0 +1,104 @@
+﻿@model ExperimentApp.Models.Participant
+
+@{
+    ViewBag.Title = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Participant</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ExpOption)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.ExpOption)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.EmotionalContent)
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.EmotionalContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VideoEmotionsDataPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VideoEmotionsDataPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AudioDataPath)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AudioDataPath)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UltimatumReceivedSum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UltimatumReceivedSum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UltimatumGaveSum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UltimatumGaveSum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.UltimatumGavePercent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.UltimatumGavePercent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrustReceivedSum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrustReceivedSum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrustGaveSum)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrustGaveSum)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TrustGavePercent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TrustGavePercent)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>
