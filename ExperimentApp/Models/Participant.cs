@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -44,8 +46,12 @@ namespace ExperimentApp.Models
         public virtual ICollection<SelfReportEmotion> SelfReportEmotions { get; set; }
 
         //Ultimatum Game
-        public int UltimatumReceivedSum { get; set; }
+        public int UltimatumReceivedSum { get; } = 20;
+
         private int ultimatumGaveSum;
+        [Required(ErrorMessage = "Please enter your proposal.")]
+        [Range(0, 20, ErrorMessage = "Please enter a number between 0 and 20.")]
+        [Display(Name ="proposal")]
         public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100; } }
         public float UltimatumGavePercent { get; private set; }
 
@@ -54,5 +60,6 @@ namespace ExperimentApp.Models
         private int trustGaveSum;
         public int TrustGaveSum { get { return trustGaveSum; }  set { trustGaveSum = value; TrustGavePercent = (trustGaveSum / (float)TrustReceivedSum) * 100; } }
         public float TrustGavePercent { get; private set; }
+
     }
 }

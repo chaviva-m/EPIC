@@ -1,74 +1,143 @@
-﻿
+﻿@model ExperimentApp.Models.Participant
+@Scripts.Render("~/Scripts/app.js")
+@Scripts.Render("~/Scripts/upload.php")
 @{
     ViewBag.Title = "Audio";
 }
 
-<h2>Audio</h2>
-<p>just copy pasted code, don't actually know what to do here yet</p>
-<p>Press the following link to continue: @Html.ActionLink("Continue", "SelfReport", "Home")</p>
 
-<input type="file" accept="audio/*;capture=microphone">
-<video autoplay></video>
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1> Tell us about your experience!</h1>
+    <p>When you're ready, click on the record button and choose three words to describe your emotions during watching the video. When you're done-click "Finished" </p>
+
+    <div id="controls">
+        <button id="recordButton">Record</button>
+        <button id="pauseButton" disabled>Pause</button>
+        <button id="stopButton" disabled>Stop</button>
+    </div>
+    <div id="formats">Format: start recording to see sample rate</div>
+    <h3>Recordings</h3>
+    <ol id="recordingsList"></ol>
+
+
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+    <script src="~/Scripts/Recorder.js"></script>
+    <script src="~/Scripts/app.js"></script>
+
+</body>
+</html>
 
 
 
-<script>
-    function hasGetUserMedia() {
-        return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-    }
 
-    if (hasGetUserMedia()) {
-        // Good to go!
-    } else {
-        alert('getUserMedia() is not supported by your browser');
-    }
-</script>
 
-<video autoplay></video>
 
-<script>
 
-    const audioSelect = document.querySelector('select#audioSource');
 
-    navigator.mediaDevices.enumerateDevices()
-        .then(gotDevices).then(getStream).catch(handleError);
 
-    audioSelect.onchange = getStream;
 
-    function gotDevices(deviceInfos) {
-        for (let i = 0; i !== deviceInfos.length; ++i) {
-            const deviceInfo = deviceInfos[i];
-            const option = document.createElement('option');
-            option.value = deviceInfo.deviceId;
-            if (deviceInfo.kind === 'audioinput') {
-                option.text = deviceInfo.label ||
-                    'microphone ' + (audioSelect.length + 1);
-                audioSelect.appendChild(option);
-            } else {
-                console.log('Found another kind of device: ', deviceInfo);
-            }
+
+
+
+
+
+
+
+
+
+
+@*
+    <h2>Audio</h2>
+    <p>just copy pasted code, don't actually know what to do here yet</p>
+
+    <div>
+        <h2>Video</h2>
+
+        <button onclick="record()">
+            Start recording
+        </button><br /><br />
+    </div>
+
+    <p>Press the following link to continue: @Html.ActionLink("Continue", "SelfReport", "Home")</p>
+
+
+
+    <script type="text/javascript">
+        function hasGetUserMedia() {
+            return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
         }
-    }
 
-    function getStream() {
-        if (window.stream) {
-            window.stream.getTracks().forEach(function (track) {
-                track.stop();
-            });
+        if (hasGetUserMedia()) {
+            // Good to go!
+        } else {
+            alert('getUserMedia() is not supported by your browser');
         }
+    </script>
 
+    <video autoplay></video>
+
+    <script>
         const constraints = {
-            audio: {
-                deviceId: { exact: audioSelect.value }
-            }
+            audio: true
         };
 
+        const audio = document.querySelector('audio');
+
         navigator.mediaDevices.getUserMedia(constraints).
-            then(gotStream).catch(handleError);
-    }
+            then((stream) => { audio.srcObject = stream });
+    </script>
 
-    function handleError(error) {
-        console.error('Error: ', error);
-    }
-</script>
+    <script>
 
+        const audioSelect = document.querySelector('select#audioSource');
+
+        navigator.mediaDevices.enumerateDevices()
+            .then(gotDevices).then(getStream).catch(handleError);
+
+        audioSelect.onchange = getStream;
+
+        function gotDevices(deviceInfos) {
+            for (let i = 0; i !== deviceInfos.length; ++i) {
+                const deviceInfo = deviceInfos[i];
+                const option = document.createElement('option');
+                option.value = deviceInfo.deviceId;
+                if (deviceInfo.kind === 'audioinput') {
+                    option.text = deviceInfo.label ||
+                        'microphone ' + (audioSelect.length + 1);
+                    audioSelect.appendChild(option);
+                } else {
+                    console.log('Found another kind of device: ', deviceInfo);
+                }
+            }
+        }
+
+        function getStream() {
+            if (window.stream) {
+                window.stream.getTracks().forEach(function (track) {
+                    track.stop();
+                });
+            }
+
+            const constraints = {
+                audio: {
+                    deviceId: { exact: audioSelect.value }
+                }
+            };
+
+            navigator.mediaDevices.getUserMedia(constraints).
+                then(gotStream).catch(handleError);
+        }
+
+        function handleError(error) {
+            console.error('Error: ', error);
+        }
+    </script>
+*@

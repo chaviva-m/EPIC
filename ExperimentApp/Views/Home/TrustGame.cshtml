@@ -1,7 +1,38 @@
-﻿
+﻿@model ExperimentApp.Models.Participant
 @{
     ViewBag.Title = "TrustGame";
 }
-
 <h2>TrustGame</h2>
+<p>כעת נשחק משחק נוסף:</p>
+<div>
+    <p>במשחק הזה, שניכם מקבלים 20 שקלים. השחקן המתחיל מקבל החלטה כמה כסף להעביר לשחקן השני. 
+    הסכום ישולש- השחקן השני יקבל פי 3 מהסכום שהוחלט להעביר לו. כעת תורו של השחקן השני: הוא מחליט 
+    איזה סכום להעביר חזרה לשחקן הראשון. גם סכום זה ישולש, כלומר- השחקן הראשון יקבל פי 3 מהסכום שהשחקן
+    השני החליט להעביר לו חזרה. שניכם תקבלו את הכסף בתום הניסוי
+    </p>
 
+    <p>בהצלחה!</p>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <fieldset>
+        <legend>Your proposal:</legend>
+        <div>
+            <label for="proposal">כמה כסף ברצונך לתת?</label>
+        </div>
+        <div class="editor field">
+            @Html.TextBoxFor(model => model.TrustGaveSum)
+            @Html.ValidationMessageFor(model => model.TrustGaveSum, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="submit" />
+        </div>
+    </fieldset>
+}
+<div>
+    @Html.ActionLink("Next", "Home")
+</div>

@@ -1,7 +1,35 @@
-﻿
+﻿@model ExperimentApp.Models.Participant
 @{
     ViewBag.Title = "UltimatumGame";
 }
-
 <h2>UltimatumGame</h2>
 
+<div>
+    <p>We will begin with the Ultimatum game. The game goes like this:</p>
+    <p>Your opponent is sitting in the other room. You have at your disposal 20 shekel,of which you must decide how much you want to keep, and how much you will give to the other player (if at all)</p>
+    <p>
+        If the other player accepts your propsal- the money will be split accordingly (you will get your share at the end of the experiment)
+        On the other hand- if the other player rejects your proposal- you both get nothing.
+    </p>
+    <p>Good luck!</p>
+</div>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <fieldset>
+        <legend>Your proposal:</legend>
+        <div>
+            <label for="proposal">How much money will you give?</label>
+        </div>
+        <div class="editor field">
+            @Html.TextBoxFor(model => model.UltimatumGaveSum)
+            @Html.ValidationMessageFor(model => model.UltimatumGaveSum, "", new { @class = "text-danger" })
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="submit" />
+        </div>
+    </fieldset>
+}

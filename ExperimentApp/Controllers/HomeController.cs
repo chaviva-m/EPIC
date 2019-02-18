@@ -86,12 +86,64 @@ namespace ExperimentApp.Controllers
 
         public ActionResult StopAudioRecording()
         {
+
             return View("Audio");
         }
 
-        public ActionResult UltimatumGame()
+        [HttpGet]
+        public ActionResult UltimatumGame(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(participant);
+        }
+
+        [HttpPost]
+        public ActionResult UltimatumGame(Participant participant)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(participant).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(participant);
+        }
+
+        [HttpGet]
+        public ActionResult TrustGame(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(participant);
+        }
+
+        [HttpPost]
+        public ActionResult TrustGame(Participant participant)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Entry(participant).State = EntityState.Modified;
+                db.SaveChanges();
+                return RedirectToAction("Index");
+            }
+
+            return View(participant);
         }
 
         public ActionResult SelfReport(int? id)
