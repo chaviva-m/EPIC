@@ -3,33 +3,102 @@
     ViewBag.Title = "UltimatumGame";
 }
 <h2>UltimatumGame</h2>
-
-<div>
-    <p>We will begin with the Ultimatum game. The game goes like this:</p>
-    <p>Your opponent is sitting in the other room. You have at your disposal 20 shekel,of which you must decide how much you want to keep, and how much you will give to the other player (if at all)</p>
-    <p>
-        If the other player accepts your propsal- the money will be split accordingly (you will get your share at the end of the experiment)
-        On the other hand- if the other player rejects your proposal- you both get nothing.
-    </p>
-    <p>Good luck!</p>
+<div dir="rtl" lang="he">
+    <div dir="rtl" lang="he">
+        <p>נתחיל במשחק האולטימטום.אתה נבחרת להיות השחקן הראשון.</p>
+        <p>המשחק הולך כך:</p>
+        <p>שחקן נוסף יושב בחדר השני. יש ברשותך 20 ש"ח ואתה צריך להחליט כמה ברצונך להציע לו (אם בכלל).</p>
+        <p>
+            אם השחקן השני יקבל את הצעתך- הסכום יחולק בהתאם (בתום הניסוי תקבל את החלק שלך מהנסיין).לעומת זאת, אם הוא יסרב להצעתך- אף אחד מכם לא יקבל תשלום. עד לסיום הניסוי לא תדע את החלטת השחקן השני.
+        </p>
+        <p>בהצלחה!</p>
+    </div>
+    <input type="button" id="waitBtn" style="float: right" ; value="מוכנים להתחיל" onclick="show()"><br><br>
+    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/giphy.gif"></div><br>
+    <h1 id="msg" style="display:none">מחכים לשחקן השני...</h1>
 </div>
-
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <fieldset>
-        <legend>Your proposal:</legend>
+    <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
+        <legend>כמה כסף ברצונך לתת?</legend>
         <div>
-            <label for="proposal">How much money will you give?</label>
+            <label for="proposal">סכום בש"ח (מספר שלם) </label>
         </div>
         <div class="editor field">
-            @Html.TextBoxFor(model => model.UltimatumGaveSum)
-            @Html.ValidationMessageFor(model => model.UltimatumGaveSum, "", new { @class = "text-danger" })
+            @Html.TextBoxFor(model => model.UltimatumGaveSum, new { id = "propId" })
         </div>
         <div>
             <label>&nbsp;</label>
-            <input type="submit" value="Submit" class="submit" />
+            <input type="submit" value="Submit" class="submit" onclick="return validate()" />
         </div>
     </fieldset>
 }
+
+<script type="text/javascript">
+
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // Get reference to drop down
+        var ddl = document.getElementById('quantitydropdownid');
+
+        for (var i = 0; i < 21; i++) {
+            var theOption = document.createElement("option");
+            theOption.text = i;
+            theOption.value = i;
+            // If it is the first option, make it be selected
+            i === 0 ? theOption.selected = "selected" : "";
+            ddl.options[i] = theOption;
+        }
+    });
+
+    function show() {
+        document.getElementById("waitBtn").disabled = true;
+        document.getElementById("myGif").style.display = "block";
+        document.getElementById("msg").style.display = "block";
+        setTimeout("hide()", 5000);  // 5 seconds
+    }
+
+    function hide() {
+        document.getElementById("myGif").style.display = "none";
+        document.getElementById("msg").style.display = "none";
+        document.getElementById("subForm").style.display = "block"
+    }
+
+    function validate() {
+
+        var e = document.getElementById("propId").value;
+        if (e < 0 || e > @Model.TrustReceivedSum || Math.floor(e) != e ||e == "" || e.length == 0 || e == null) {
+            alert("נא להזין מספר שלם בין 0 ל 20 ");
+            return false;
+        }
+    }
+
+</script>
+
+
+
+
+@*
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <fieldset dir="rtl" lang="he">
+            <legend>כמה כסף ברצונך לתת?</legend>
+            <div>
+                <label for="proposal">סכום בש"ח (מספר שלם)</label>
+            </div>
+            <div class="editor field">
+                @Html.TextBoxFor(model => model.UltimatumGaveSum)
+                @Html.ValidationMessageFor(model => model.UltimatumGaveSum, "", new { @class = "text-danger" })
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input type="submit" value="Submit" class="submit" />
+            </div>
+        </fieldset>
+    }
+*@

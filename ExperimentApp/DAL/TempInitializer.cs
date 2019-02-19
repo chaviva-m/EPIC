@@ -18,7 +18,7 @@ namespace ExperimentApp.DAL
                 VideoEmotionsDataPath="parVideoData", VideoEmotionFrequencies=new Dictionary<string, double>{ { "happy", 0.52 } },
                 AudioDataPath="parAudio.wav", AudioEmotionFrequencies=new Dictionary<string, double>{{"happy",0.4}},
                 UltimatumGaveSum=2,
-                TrustReceivedSum=20, TrustGaveSum=10 }
+                TrustGaveSum=10 }
             };
 
             participants.ForEach(s => context.Participants.Add(s));

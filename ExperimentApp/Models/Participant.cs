@@ -51,13 +51,17 @@ namespace ExperimentApp.Models
         private int ultimatumGaveSum;
         [Required(ErrorMessage = "Please enter your proposal.")]
         [Range(0, 20, ErrorMessage = "Please enter a number between 0 and 20.")]
-        [Display(Name ="proposal")]
+        [Display(Name = "proposal")]
         public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100; } }
         public float UltimatumGavePercent { get; private set; }
 
         //Trust Game
-        public int TrustReceivedSum { get; set; }
+
+        public int TrustReceivedSum { get; } = 20;
         private int trustGaveSum;
+        [Required(ErrorMessage = "שדה חובה")]
+        [Range(0, 20, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 20")]
+        [Display(Name = "הצעה")]
         public int TrustGaveSum { get { return trustGaveSum; }  set { trustGaveSum = value; TrustGavePercent = (trustGaveSum / (float)TrustReceivedSum) * 100; } }
         public float TrustGavePercent { get; private set; }
 
