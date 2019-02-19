@@ -5,9 +5,9 @@ using System.Web;
 
 namespace ExperimentApp.Infrastructure
 {
-    public class SelfReportEmotions
+    public class Emotions
     {
-        public List<string> Emotions { get; set; } = new List<string>
+        public static List<string> SelfReportEmotions { get; set; } = new List<string>
         {
             "Interested מעונין", "Sad עצוב", "Arousal התרגשות",
             "Disgust גועל", "Surprised מופתע", "Contentment סיפוק",

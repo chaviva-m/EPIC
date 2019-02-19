@@ -43,7 +43,7 @@ namespace ExperimentApp.Models
         public Dictionary<string, double> AudioEmotionFrequencies { get; set; }
 
         //emotions - self report
-        public virtual ICollection<SelfReportEmotion> SelfReportEmotions { get; set; }
+        public SelfReportQuestionnaire SelfReportQuestionnaire { get; set; }
 
         //Ultimatum Game
         public int UltimatumReceivedSum { get; } = 20;

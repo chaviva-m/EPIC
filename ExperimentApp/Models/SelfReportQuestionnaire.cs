@@ -1,6 +1,7 @@
 ﻿using ExperimentApp.Infrastructure;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -8,25 +9,11 @@ namespace ExperimentApp.Models
 {
     public class SelfReportQuestionnaire
     {
-        public int ID;
-        public int ParticipantID;
+        public int ID { get; set; }
+        public int ParticipantID { get; set; }
 
-        private static SelfReportEmotions SREs = new SelfReportEmotions();
-        public virtual ICollection<SelfReportEmotion> Emotions
-        {
-            get
-            {
-                ICollection<SelfReportEmotion> emotions = new List<SelfReportEmotion>();
-                foreach (string e in SREs.Emotions)
-                {
-                    SelfReportEmotion em = new SelfReportEmotion
-                    {
-                        Emotion = e
-                    };
-                    emotions.Add(em);
-                }
-                return emotions;
-            }
-        }
+        public List<int> Options { get; } = new List<int> { 1, 2, 3, 4, 5 };
+
+        public virtual List<SelfReportEmotion> Emotions { get; set; }
     }
 }

@@ -14,7 +14,8 @@ namespace ExperimentApp.DAL
 
         public DbSet<Participant> Participants { get; set; }
         public DbSet<SelfReportEmotion> SelfReportEmotions { get; set; }
-
+        public DbSet<SelfReportQuestionnaire> SelfReportQuestionnaires { get; set; }
+        
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
