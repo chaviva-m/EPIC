@@ -19,7 +19,7 @@ namespace ExperimentApp.Controllers
     {
         private ExperimentContext db = new ExperimentContext();
         private static readonly Video videoModel = new Video();
-        private static readonly SelfReportEmotions SREs = new SelfReportEmotions();
+        private static readonly Emotions SREs = new Emotions();
 
         public ActionResult Index()
         {
@@ -158,31 +158,39 @@ namespace ExperimentApp.Controllers
             {
                 return HttpNotFound();
             }
-            //add self report emotions
-            var emotions = new List<SelfReportEmotion>();
-            foreach (string e in SREs.Emotions)
+
+            //add self report questionnaire
+            participant.SelfReportQuestionnaire = new SelfReportQuestionnaire();
+            participant.SelfReportQuestionnaire.ParticipantID = participant.ID;
+            List<SelfReportEmotion> emotions = new List<SelfReportEmotion>();
+            foreach (string emotion in Emotions.SelfReportEmotions)
             {
-                SelfReportEmotion em = new SelfReportEmotion
-                {
-                    ParticipantID = participant.ID,
-                    Emotion = e
-                };
-                emotions.Add(em);
+                emotions.Add(new SelfReportEmotion { SelfReportQuestionnaireID = participant.SelfReportQuestionnaire.ID, Name = emotion });
             }
-            emotions.ForEach(e => db.SelfReportEmotions.Add(e));
-            db.SaveChanges();
+            participant.SelfReportQuestionnaire.Emotions = emotions;
 
-            return View(participant);
-        }
-
-        // POST: Participant/Delete/5
-        [HttpPost, ActionName("SelfReport")]
-        [ValidateAntiForgeryToken]
-        public ActionResult SelfReportSubmitted(int id)
-        {
-            Participant participant = db.Participants.Find(id);
+            //save changes in database
             db.Entry(participant).State = EntityState.Modified;
             db.SaveChanges();
+
+            return View(participant.SelfReportQuestionnaire);
+        }
+
+        // POST
+        [HttpPost, ActionName("SelfReport")]
+        [ValidateAntiForgeryToken]
+        public ActionResult SelfReportSubmitted(SelfReportQuestionnaire selfReportQuestionnaire)
+        {
+            if (ModelState.IsValid)
+            {
+                //save changes in database
+                foreach (SelfReportEmotion emotion in selfReportQuestionnaire.Emotions)
+                {
+                    db.Entry(emotion).State = EntityState.Modified;
+                }
+                db.Entry(selfReportQuestionnaire).State = EntityState.Modified;
+                db.SaveChanges();
+            }
             return RedirectToAction("Finish");
         }
 
