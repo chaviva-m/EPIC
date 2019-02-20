@@ -13,7 +13,7 @@ using ExperimentApp.Infrastructure;
 namespace ExperimentApp.Models
 {
     public class Video
-    { 
+    {
         EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.AutoReset);
 
         public void StopRecording()
@@ -41,8 +41,11 @@ namespace ExperimentApp.Models
             {
                 try
                 {
+                    ProcessStartInfo startInfo = new ProcessStartInfo(processPath);
+                    startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+                    startInfo.Arguments = String.Format("\"{0}\" \"{1}\"", file, video);
                     //start process
-                    using (Process myProcess = Process.Start(processPath, file + " " + video))
+                    using (Process myProcess = Process.Start(startInfo))
                     {
                         //wait for signnal
                         ewh.WaitOne();
