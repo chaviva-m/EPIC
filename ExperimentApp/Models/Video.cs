@@ -144,3 +144,10 @@ namespace ExperimentApp.Models
         }
     }
 }
+/*
+    cd C:\Users\leah\Desktop\python_projects\Emotion\ 
+start /MIN python emotions.py "%1" -o "%2"
+ProcessStartInfo startInfo = new ProcessStartInfo(processPath);
+startInfo.WindowStyle = ProcessWindowStyle.Minimized;
+startInfo.Arguments = String.Format("\"{0}\" \"{1}\"", file, video);
+ */
