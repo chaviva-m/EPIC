@@ -49,7 +49,7 @@ namespace ExperimentApp.Models
                     {
                         //wait for signnal
                         ewh.WaitOne();
-                        // Close process by sending a close message to its main window.
+                        // Close process by sending a close message to its window.
                         SearchAndClose("Python Script");
                     }
                     return true;
