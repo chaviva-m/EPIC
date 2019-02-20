@@ -50,7 +50,7 @@ namespace ExperimentApp.Models
                         //wait for signnal
                         ewh.WaitOne();
                         // Close process by sending a close message to its main window.
-                        myProcess.CloseMainWindow();
+                        SearchAndClose("Python Script");
                     }
                     return true;
                 }
@@ -63,9 +63,6 @@ namespace ExperimentApp.Models
             });
             t.Start();
 
-            //BringWebAppToFront(); //doesn't work - not sure if it's even supposed to do what I think it's supposed to do...
-            //ForceForegroundWindow();    //doesn't work - same
-
             //wait for recording to start
             Thread.Sleep(10000);    //change this to detect when webcam turns on (or put the webcam detection in View to automatically hit play)
 
@@ -73,74 +70,21 @@ namespace ExperimentApp.Models
 
         }
 
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr FindWindow(string className, string windowName);
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wParam, IntPtr lParam);
 
-        //Doesn't work
+        private const int WM_CLOSE = 0x10;
+        private const int WM_QUIT = 0x12;
 
-        [DllImport("user32.dll")]
-        private static extern uint GetWindowThreadProcessId(IntPtr FW, IntPtr intPtr);
-        [DllImport("Kernel32.dll")]
-        private static extern uint GetCurrentThreadId();
-        [DllImport("user32.dll")]
-        private static extern void AttachThreadInput(uint thread1, uint thread2, Boolean bl);
-        [DllImport("user32.dll")]
-        private static extern void BringWindowToTop(IntPtr intPtr);
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, uint nCmdShow);
-
-        private static void ForceForegroundWindow()
+        private void SearchAndClose(string windowName)
         {
-            Process process = Process.GetCurrentProcess();
-            IntPtr hWnd = process.MainWindowHandle;
-
-            uint foreThread = GetWindowThreadProcessId(GetForegroundWindow(), IntPtr.Zero);
-            uint appThread = GetCurrentThreadId();
-            const uint SW_SHOW = 5;
-
-            if (foreThread != appThread)
-            {
-                AttachThreadInput(foreThread, appThread, true);
-                BringWindowToTop(hWnd);
-                ShowWindow(hWnd, SW_SHOW);
-                AttachThreadInput(foreThread, appThread, false);
-            }
-            else
-            {
-                BringWindowToTop(hWnd);
-                ShowWindow(hWnd, SW_SHOW);
-            }
+            IntPtr hWnd = FindWindow(null, windowName);
+            if (hWnd == IntPtr.Zero)
+                throw new Exception("Couldn't find window!");
+            SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
         }
 
-        //Doesn't work
-
-        private const int ALT = 0xA4;
-        private const int EXTENDEDKEY = 0x1;
-        private const int KEYUP = 0x2;
-        private const int SHOW_MAXIMIZED = 3;
-
-        [DllImport("user32.dll")]
-        private static extern IntPtr GetForegroundWindow();
-        [DllImport("user32.dll")]
-        private static extern void keybd_event(byte bVk, byte bScan, uint dwFlags, int dwExtraInfo);
-        [DllImport("user32.dll")]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
-        [DllImport("user32.dll")]
-        private static extern bool ShowWindow(IntPtr hWnd, int nCmdShow);
-
-        private void BringWebAppToFront()
-        {
-            Process process = Process.GetCurrentProcess();
-            IntPtr handle = process.MainWindowHandle;
-
-            // Show window maximized.
-            ShowWindow(handle, SHOW_MAXIMIZED);
-
-            // Simulate an "ALT" key press.
-            keybd_event((byte)ALT, 0x45, EXTENDEDKEY | 0, 0);
-
-            // Simulate an "ALT" key release.
-            keybd_event((byte)ALT, 0x45, EXTENDEDKEY | KEYUP, 0);
-
-            SetForegroundWindow(handle);
-        }
     }
 }
