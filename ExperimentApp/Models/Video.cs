@@ -14,14 +14,16 @@ namespace ExperimentApp.Models
 {
     public class Video
     {
-        EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private EventWaitHandle ewh = new EventWaitHandle(false, EventResetMode.AutoReset);
+        private static readonly Object obj = new Object();
+        private bool ProcessSuccess = true;
 
         public void StopRecording()
         {
             //signal to stop process
             ewh.Set();
-            //wait for recording to stop
-            Thread.Sleep(3000);    //change this to detect when webcam turns off
+            //wait for participant to internalize
+            Thread.Sleep(1000);
         }
 
         public bool RecordVideo(Participant participant)
@@ -29,7 +31,6 @@ namespace ExperimentApp.Models
             /*NOTICE: bash file changes directory to emotions.py's root directory. Need to change this.
              Maybe we can put python project directory in this project so that we can give relative path?*/
 
-            //file and video paths - not actually sure if this updates it in the database
             string file = "VideoData" + participant.ID;  // give root directory of where we want to store the data
             participant.VideoPath = file;
             string video = "Video" + participant.ID;     // give root directory of where we want to store the data
@@ -37,7 +38,11 @@ namespace ExperimentApp.Models
             string processRelPath = "Scripts\\VideoEmotionDetector\\run_emotions.bat";
             string processPath = HttpContext.Current.Server.MapPath(Path.Combine("~", processRelPath));
 
-            Task<bool> t = new Task<bool>(() =>
+            string python_window = "Python Script";
+            string webcam_window = "camera";
+
+            ProcessSuccess = true;
+            Task t = new Task(() =>
             {
                 try
                 {
@@ -47,26 +52,38 @@ namespace ExperimentApp.Models
                     //start process
                     using (Process myProcess = Process.Start(startInfo))
                     {
-                        //wait for signnal
+                        //wait for signal
                         ewh.WaitOne();
                         // Close process by sending a close message to its window.
-                        SearchAndClose("Python Script");
+                        SearchAndClose(python_window);
                     }
-                    return true;
                 }
                 catch (Exception e)
                 {
+                    lock (obj)
+                    {
+                        ProcessSuccess = false;
+                    }
                     Console.WriteLine("The following exception was raised: ");
                     Console.WriteLine(e.Message);
-                    return false;
                 }
             });
             t.Start();
-
-            //wait for recording to start
-            Thread.Sleep(10000);    //change this to detect when webcam turns on (or put the webcam detection in View to automatically hit play)
-
-            return true;            //return false if there is an exception in task / return t.Result;
+            //check if camera window opened
+            Thread.Sleep(10000);
+            while (!WindowIsOpen(webcam_window))
+            {
+                if (!WindowIsOpen(python_window))
+                {
+                    lock (obj)
+                    {
+                        ProcessSuccess = false;
+                    }
+                    break;
+                }
+                Thread.Sleep(3000);
+            }
+            return ProcessSuccess;            
 
         }
 
@@ -77,6 +94,14 @@ namespace ExperimentApp.Models
 
         private const int WM_CLOSE = 0x10;
         private const int WM_QUIT = 0x12;
+
+        private bool WindowIsOpen(string windowName)
+        {
+            IntPtr hWnd = FindWindow(null, windowName);
+            if (hWnd == IntPtr.Zero)
+                return false;
+            return true;
+        }
 
         private void SearchAndClose(string windowName)
         {

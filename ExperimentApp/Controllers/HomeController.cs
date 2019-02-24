@@ -54,9 +54,21 @@ namespace ExperimentApp.Controllers
                 return HttpNotFound();
             }
             bool finished = videoModel.RecordVideo(participant);
-            db.SaveChanges(); 
+            if (finished == false)
+            {
+                TempData["ErrorMessage"] = "שגיאה בהקלטת הוידאו";
+                return RedirectToAction("Error");
+            }
+            db.SaveChanges();
             return View(participant);
         }
+
+        //public ActionResult FormJquery(int id)
+        //{
+        //    bool result = true;
+
+        //    return Json(new { returnvalue = result });
+        //}
 
         public ActionResult GetVideo(EmotionalContentEnum em)
         {
@@ -195,6 +207,11 @@ namespace ExperimentApp.Controllers
         }
 
         public ActionResult Finish()
+        {
+            return View();
+        }
+
+        public ActionResult Error()
         {
             return View();
         }

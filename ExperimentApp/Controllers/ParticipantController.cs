@@ -51,11 +51,20 @@ namespace ExperimentApp.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "ExpOption")] Participant participant)
         {
-            if (ModelState.IsValid)
+            try
             {
-                db.Participants.Add(participant);
-                db.SaveChanges();
-                return RedirectToAction("Start", "Home", new { id = participant.ID });
+                if (ModelState.IsValid)
+                {
+                    db.Participants.Add(participant);
+                    db.SaveChanges();
+                    return RedirectToAction("Start", "Home", new { id = participant.ID });
+                }
+            } catch(DataException e)
+            {
+                ModelState.AddModelError("", "Unable to save changes." + e.Message);
+                TempData["ErrorMessage"] =  "שגיאה באתחול הנבדק " + e.Message;
+                return RedirectToAction("Error");
+
             }
             return View(participant);
         }
