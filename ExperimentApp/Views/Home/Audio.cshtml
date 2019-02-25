@@ -16,17 +16,15 @@
 </head>
 <body dir="rtl" lang="he" style="font-size:large">
     <h1>ספר לנו על החוויה שלך!</h1>
-    <p>כשאתה מוכן, לחץ על כפתור "Record" ובחר 3 מילים שמבטאות את הרגשות שלך במהלך הצפייה בסרטון.</p>
-    <p></p>
-    <p style="font-size:large">When you're ready, click on the record button and choose three words to describe your emotions while watching the video.</p>
-    <p style="font-size:large">When you're done-click "Finished" </p>
-    <br/>
+    <p>בחר 3 מילים הנותנות ביטוי בצורה כלשהי לרגשות שצפו בך במהלך הצפייה בסרטון (ניתן להיעזר במילים המופיעות מטה). </p>
+    <p>לתחילת ההקלטה הקש "Record" ולסיום הקש "Stop".</p>
+    <br />
     <div>
         <center>
-            <img width="1200", src="~/Content/images/emotion_words.png">
+            <img width="1200" , src="~/Content/images/emotion_words.png">
         </center>
     </div>
-    <br/>
+    <br />
     <div id="controls">
         <button id="recordButton">Record</button>
         <button id="pauseButton" disabled style="display:none">Pause</button>
@@ -50,110 +48,3 @@
         window.location.href = '@Url.Action("UltimatumGame", new { id = Model.ID })';
     }
 </script>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@*
-    <h2>Audio</h2>
-    <p>just copy pasted code, don't actually know what to do here yet</p>
-
-    <div>
-        <h2>Video</h2>
-
-        <button onclick="record()">
-            Start recording
-        </button><br /><br />
-    </div>
-
-    <p>Press the following link to continue: @Html.ActionLink("Continue", "SelfReport", "Home")</p>
-
-
-
-    <script type="text/javascript">
-        function hasGetUserMedia() {
-            return !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia);
-        }
-
-        if (hasGetUserMedia()) {
-            // Good to go!
-        } else {
-            alert('getUserMedia() is not supported by your browser');
-        }
-    </script>
-
-    <video autoplay></video>
-
-    <script>
-        const constraints = {
-            audio: true
-        };
-
-        const audio = document.querySelector('audio');
-
-        navigator.mediaDevices.getUserMedia(constraints).
-            then((stream) => { audio.srcObject = stream });
-    </script>
-
-    <script>
-
-        const audioSelect = document.querySelector('select#audioSource');
-
-        navigator.mediaDevices.enumerateDevices()
-            .then(gotDevices).then(getStream).catch(handleError);
-
-        audioSelect.onchange = getStream;
-
-        function gotDevices(deviceInfos) {
-            for (let i = 0; i !== deviceInfos.length; ++i) {
-                const deviceInfo = deviceInfos[i];
-                const option = document.createElement('option');
-                option.value = deviceInfo.deviceId;
-                if (deviceInfo.kind === 'audioinput') {
-                    option.text = deviceInfo.label ||
-                        'microphone ' + (audioSelect.length + 1);
-                    audioSelect.appendChild(option);
-                } else {
-                    console.log('Found another kind of device: ', deviceInfo);
-                }
-            }
-        }
-
-        function getStream() {
-            if (window.stream) {
-                window.stream.getTracks().forEach(function (track) {
-                    track.stop();
-                });
-            }
-
-            const constraints = {
-                audio: {
-                    deviceId: { exact: audioSelect.value }
-                }
-            };
-
-            navigator.mediaDevices.getUserMedia(constraints).
-                then(gotStream).catch(handleError);
-        }
-
-        function handleError(error) {
-            console.error('Error: ', error);
-        }
-    </script>
-*@

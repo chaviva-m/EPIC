@@ -63,13 +63,6 @@ namespace ExperimentApp.Controllers
             return View(participant);
         }
 
-        //public ActionResult FormJquery(int id)
-        //{
-        //    bool result = true;
-
-        //    return Json(new { returnvalue = result });
-        //}
-
         public ActionResult GetVideo(EmotionalContentEnum em)
         {
             string relativeVideoPath = EmotionInducingContent.VideoByContent[em];

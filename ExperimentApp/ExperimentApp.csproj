@@ -170,6 +170,7 @@
     <Content Include="Content\images\20_shekel.jpg" />
     <Content Include="Content\images\emotion_words.jpg" />
     <Content Include="Content\images\emotion_words.png" />
+    <Content Include="Content\images\moneySmile.jpg" />
     <Content Include="Content\videos\GreatBarrierReefAustrailia.mp4" />
     <Content Include="Content\videos\LionKing.mp4" />
     <Content Include="Content\videos\shortTemp.mp4" />
