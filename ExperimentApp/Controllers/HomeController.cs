@@ -68,27 +68,27 @@ namespace ExperimentApp.Controllers
             return new FileStreamResult(fs, "video/mp4");
         }
 
-        public ActionResult EndVideoRecording()
+        public ActionResult EndVideoRecording(int? id)
         {
+
             videoModel.StopRecording();
-            return RedirectToAction("Audio");   //change to different page
+            return RedirectToAction("Audio", new { id });   //change to different page
         }
 
-        public ActionResult Audio(Participant participant)
+        public ActionResult Audio(int? id)
         {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
             return View(participant);
         }
 
-        public ActionResult StartAudioRecording()
-        {
-            return View("Audio");
-        }
-
-        public ActionResult StopAudioRecording()
-        {
-
-            return View("Audio");
-        }
 
         [HttpGet]
         public ActionResult UltimatumGame(int? id)
@@ -112,7 +112,7 @@ namespace ExperimentApp.Controllers
             {
                 db.Entry(participant).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("TrustGame", new { id = participant.ID });
             }
 
             return View(participant);
@@ -140,7 +140,7 @@ namespace ExperimentApp.Controllers
             {
                 db.Entry(participant).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Index");
+                return RedirectToAction("SelfReport", new { id = participant.ID });
             }
 
             return View(participant);

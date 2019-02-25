@@ -20,11 +20,13 @@
 
     <div id="controls">
         <button id="recordButton">Record</button>
-        <button id="pauseButton" disabled>Pause</button>
+        <button id="pauseButton" disabled style="display:none">Pause</button>
         <button id="stopButton" disabled>Stop</button>
+        <h1 id="participantId" style="display:none">@Model.ID</h1>
+
     </div>
-    <div id="formats">Format: start recording to see sample rate</div>
-    <h3>Recordings</h3>
+    @*<div id="formats">Format: start recording to see sample rate</div>*@
+    <h3 style="display:none" id="recordings">Recordings</h3>
     <ol id="recordingsList"></ol>
 
 
@@ -34,6 +36,11 @@
 
 </body>
 </html>
+<script type="text/javascript">
+    function myFunc() {
+        window.location.href = '@Url.Action("UltimatumGame", new { id = Model.ID })';
+    }
+</script>
 
 
 

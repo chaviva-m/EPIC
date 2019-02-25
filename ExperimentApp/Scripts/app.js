@@ -11,15 +11,15 @@ var audioContext //audio context to help us record
 
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
-//var pauseButton = document.getElementById("pauseButton");
+
 
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
-//pauseButton.addEventListener("click", pauseRecording);
 
 function startRecording() {
     console.log("recordButton clicked");
+    document.getElementById("recordings").style.display = "block";
 
 	/*
 		Simple constraints object, for more advanced audio features see
@@ -52,7 +52,7 @@ function startRecording() {
         audioContext = new AudioContext();
 
         //update the format 
-        document.getElementById("formats").innerHTML = "Format: 1 channel pcm @ " + audioContext.sampleRate / 1000 + "kHz"
+        //document.getElementById("formats").innerHTML = "Format: 1 channel pcm @ " + audioContext.sampleRate / 1000 + "kHz"
 
         /*  assign to gumStream for later use  */
         gumStream = stream;
@@ -78,21 +78,8 @@ function startRecording() {
         //pauseButton.disabled = true
     });
 }
-/*
-function pauseRecording() {
-    console.log("pauseButton clicked rec.recording=", rec.recording);
-    if (rec.recording) {
-        //pause
-        rec.stop();
-        pauseButton.innerHTML = "Resume";
-    } else {
-        //resume
-        rec.record()
-        pauseButton.innerHTML = "Pause";
 
-    }
-}
-*/
+
 function stopRecording() {
     //var audFile;
     console.log("stopButton clicked");
@@ -100,10 +87,6 @@ function stopRecording() {
     //disable the stop button, enable the record too allow for new recordings
     stopButton.disabled = true;
     recordButton.disabled = false;
-    //pauseButton.disabled = true;
-
-    //reset button just in case the recording is stopped while paused
-    //pauseButton.innerHTML = "Pause";
 
     //tell the recorder to stop the recording
     rec.stop();
@@ -113,18 +96,6 @@ function stopRecording() {
 
     //create the wav blob and pass it on to createDownloadLink
     rec.exportWAV(createDownloadLink);
-
-    /*
-    audFile = rec.exportWAV();
-    window.location.href = '@Url.Action("EndAudioRecording", audFile)';
-    HttpPostedFileBase hpf = Request.Files[file] as HttpPostedFileBase;
-    if (hpf.ContentLength == 0)
-        continue;
-    string savedFileName = Path.Combine(
-        AppDomain.CurrentDomain.BaseDirectory,
-        Path.GetFileName(hpf.FileName));
-    hpf.SaveAs(savedFileName);
-    */
 }
 
 function createDownloadLink(blob) {
@@ -135,44 +106,25 @@ function createDownloadLink(blob) {
     var link = document.createElement('a');
 
     //name of .wav file to use during upload and download (without extendion)
-    var filename = new Date().toISOString();
+    var filename = "participant" + document.getElementById("participantId").innerHTML;
 
     //add controls to the <audio> element
     au.controls = true;
     au.src = url;
-
     //save to disk link
     link.href = url;
     link.download = filename + ".wav"; //download forces the browser to donwload the file using the  filename
-    link.innerHTML = "Finished";
+    link.innerHTML = "בחר בהקלטה זו והמשך";
+    link.onclick = myFunc;
 
     //add the new audio element to li
     li.appendChild(au);
 
     //add the filename to the li
-    li.appendChild(document.createTextNode(filename + ".wav "))
+    //li.appendChild(document.createTextNode(filename + ".wav "))
 
     //add the save to disk link to li
     li.appendChild(link);
-
-    //upload link
-    var upload = document.createElement('a');
-    upload.href = "#";
-    upload.innerHTML = "Upload";
-    upload.addEventListener("click", function (event) {
-        var xhr = new XMLHttpRequest();
-        xhr.onload = function (e) {
-            if (this.readyState === 4) {
-                console.log("Server returned: ", e.target.responseText);
-            }
-        };
-        var fd = new FormData();
-        fd.append("audio_data", blob, filename);
-        xhr.open("POST", "upload.php", true);
-        xhr.send(fd);
-    })
-    li.appendChild(document.createTextNode(" "))//add a space in between
-    li.appendChild(upload)//add the upload link to li
 
     //add the li element to the ol
     recordingsList.appendChild(li);

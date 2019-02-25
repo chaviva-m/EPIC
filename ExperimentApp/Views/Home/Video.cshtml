@@ -55,7 +55,7 @@
     }
     videoElement.addEventListener('ended', myHandler, false);
     function myHandler(e) {
-        window.location.href = '@Url.Action("EndVideoRecording")';
+        window.location.href = '@Url.Action("EndVideoRecording", new { id = Model.ID })';
     }
 
     $("#camera").webcam({

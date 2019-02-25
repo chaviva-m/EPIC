@@ -50,6 +50,7 @@ namespace ExperimentApp.Models
                         //wait for signnal
                         ewh.WaitOne();
                         // Close process by sending a close message to its window.
+                        //myProcess.CloseMainWindow();
                         SearchAndClose("Python Script");
                     }
                     return true;
