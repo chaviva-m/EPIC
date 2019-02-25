@@ -5,9 +5,96 @@
 }
 
 <div>
-    <p></p>
-    <h2 class="lead">--Explanation--</h2>
-    <p></p>
-    <p>@Html.ActionLink("Play Video", "Video", "Home",new { id = Model.ID}, null)</p>
+    <h2>Start</h2>
+    <br />
+    <p style="font-size:large" dir="rtl" lang="he">בתחילת הניסוי תצפה בסרטון.</p>
+    <p style="font-size:large" dir="rtl" lang="he">
+        כשאתה מוכן להתחיל, לחץ על הכפתור.
+        <br/><br/>
+        <input type="button" id="playVideo" dir="rtl" lang="he" value="המשך לסרטון" onclick="show()">
+    </p>
 </div>
+
+<div id="myGif" style="display:none">
+    <center>
+        <img height="300" ; src="~/Content/Gifs/loading.gif">
+    </center>
+</div>
+
+@*<video controls="controls" id="videoPlayer" style="display:none" width="450" height="320">
+    <source src="@Url.Action("GetVideo", "Home", new {em = Model.EmotionalContent})" type="video/mp4">
+</video>*@
+
+
+<script type="text/javascript">
+    //loading
+    function show() {
+        document.getElementById("playVideo").disabled = true;
+        document.getElementById("myGif").style.display = "block";
+        window.location.href = '@Url.Action("Video", "Home", new { id = Model.ID }, null)';
+        //GetTransactionBuyingRate();
+    }
+
+    @*function GetTransactionBuyingRate() {
+        return $.ajax({
+                    url: '@Url.Action("FormJquery", "Home", new { id = Model.ID })',
+                    dataType: "json",
+                    type: "POST",
+                    success: function (result) {
+                        if (result.returnvalue == true) {
+                            alert("true");
+                            playVideo();
+                        } else {
+                            alert("false");
+                            window.location.href = '@Url.Action("Error", "Home")';
+                        }
+                    }
+                });
+    }
+
+    //video
+    function isFullScreenAvailable() {
+        return (
+            document.fullscreenEnabled ||
+            document.webkitFullscreenEnabled ||
+            document.mozFullScreenEnabled ||
+            document.msFullscreenEnabled
+        );
+    }
+    function requestFullScreen(elementToRequest) {
+        if (elementToRequest.requestFullScreen) {
+            elementToRequest.requestFullScreen();
+        }
+        else if (elementToRequest.webkitRequestFullscreen) {
+            elementToRequest.webkitRequestFullscreen();
+        }
+        else if (elementToRequest.mozRequestFullScreen) {
+            elementToRequest.mozRequestFullScreen();
+        }
+        else if (elementToRequest.msRequestFullscreen) {
+            elementToRequest.msRequestFullscreen();
+        }
+    }
+
+    var videoElement = document.getElementById('videoPlayer');
+    function makeVideoFullScreen() {
+        if (isFullScreenAvailable) {
+            requestFullScreen(videoElement);
+            return;
+        }
+        alert("Sorry full screen is not available in this browser");
+    }
+    function playVideo() {
+        document.getElementById("myGif").style.display = "none";
+        document.getElementById("videoPlayer").style.display = "block";
+        makeVideoFullScreen()
+        videoElement.play();
+        return;
+    }
+    videoElement.addEventListener('ended', myHandler, false);
+    function myHandler(e) {
+        window.location.href = '@Url.Action("EndVideoRecording")';
+    }*@  
+</script>
+
 

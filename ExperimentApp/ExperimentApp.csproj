@@ -167,6 +167,8 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\emotion_words.jpg" />
+    <Content Include="Content\images\emotion_words.png" />
     <Content Include="Content\videos\GreatBarrierReefAustrailia.mp4" />
     <Content Include="Content\videos\LionKing.mp4" />
     <Content Include="Content\videos\shortTemp.mp4" />
@@ -223,8 +225,11 @@
     <Content Include="Views\Participant\CreateOriginal.cshtml" />
     <Content Include="Views\Home\SelfReport.cshtml" />
     <Content Include="Views\Home\Finish.cshtml" />
+    <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Content\Gifs\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

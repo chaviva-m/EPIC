@@ -18,6 +18,7 @@ namespace ExperimentApp.Models
         public EmotionalContentEnum EmotionalContent { get { return emotionalContent; } set { emotionalContent = value; ExpOption = Convert.ToInt32(emotionalContent); } }
         //experiment option
         private int expOption ;
+        [Display(Name = "Experiment Option")]
         public int ExpOption { get { return expOption; } set { expOption = value; emotionalContent = (EmotionalContentEnum)expOption; } }
         public SelectList ExpOptionList
 
