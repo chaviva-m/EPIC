@@ -50,9 +50,9 @@ namespace ExperimentApp.Models
         public int UltimatumReceivedSum { get; } = 20;
 
         private int ultimatumGaveSum;
-        [Required(ErrorMessage = "Please enter your proposal.")]
-        [Range(0, 20, ErrorMessage = "Please enter a number between 0 and 20.")]
-        [Display(Name = "proposal")]
+        [Required(ErrorMessage = "שדה חובה")]
+        [Range(0, 20, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 20")]
+        [Display(Name = "הצעה")]
         public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100; } }
         public float UltimatumGavePercent { get; private set; }
 

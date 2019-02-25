@@ -63,13 +63,6 @@ namespace ExperimentApp.Controllers
             return View(participant);
         }
 
-        //public ActionResult FormJquery(int id)
-        //{
-        //    bool result = true;
-
-        //    return Json(new { returnvalue = result });
-        //}
-
         public ActionResult GetVideo(EmotionalContentEnum em)
         {
             string relativeVideoPath = EmotionInducingContent.VideoByContent[em];
@@ -82,9 +75,17 @@ namespace ExperimentApp.Controllers
 
         public ActionResult EndVideoRecording(int? id)
         {
-
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
             videoModel.StopRecording();
-            return RedirectToAction("Audio", new { id });   //change to different page
+            return RedirectToAction("Audio", new { id = participant.ID });   //change to different page
         }
 
         public ActionResult Audio(int? id)
