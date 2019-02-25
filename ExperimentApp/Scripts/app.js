@@ -19,8 +19,6 @@ stopButton.addEventListener("click", stopRecording);
 
 function startRecording() {
     console.log("recordButton clicked");
-    document.getElementById("recordings").style.display = "block";
-
 	/*
 		Simple constraints object, for more advanced audio features see
 		https://addpipe.com/blog/audio-constraints-getusermedia/
@@ -34,7 +32,6 @@ function startRecording() {
 
     recordButton.disabled = true;
     stopButton.disabled = false;
-    //pauseButton.disabled = false
 
 	/*
     	We're using the standard promise based getUserMedia() 
@@ -83,6 +80,7 @@ function startRecording() {
 function stopRecording() {
     //var audFile;
     console.log("stopButton clicked");
+    document.getElementById("recordings").style.display = "block";
 
     //disable the stop button, enable the record too allow for new recordings
     stopButton.disabled = true;
@@ -106,7 +104,7 @@ function createDownloadLink(blob) {
     var link = document.createElement('a');
 
     //name of .wav file to use during upload and download (without extendion)
-    var filename = "participant" + document.getElementById("participantId").innerHTML;
+    var filename = "audio" + document.getElementById("participantId").innerHTML;
 
     //add controls to the <audio> element
     au.controls = true;

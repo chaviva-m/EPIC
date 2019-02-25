@@ -58,6 +58,7 @@ namespace ExperimentApp.Controllers
                 TempData["ErrorMessage"] = "שגיאה בהקלטת הוידאו";
                 return RedirectToAction("Error");
             }
+            db.Entry(participant).State = EntityState.Modified;
             db.SaveChanges();
             return View(participant);
         }
