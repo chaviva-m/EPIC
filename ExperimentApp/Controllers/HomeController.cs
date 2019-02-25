@@ -58,6 +58,7 @@ namespace ExperimentApp.Controllers
                 TempData["ErrorMessage"] = "שגיאה בהקלטת הוידאו";
                 return RedirectToAction("Error");
             }
+            db.Entry(participant).State = EntityState.Modified;
             db.SaveChanges();
             return View(participant);
         }
@@ -81,9 +82,17 @@ namespace ExperimentApp.Controllers
 
         public ActionResult EndVideoRecording(int? id)
         {
-
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
             videoModel.StopRecording();
-            return RedirectToAction("Audio", new { id });   //change to different page
+            return RedirectToAction("Audio", new { id = participant.ID });   //change to different page
         }
 
         public ActionResult Audio(int? id)

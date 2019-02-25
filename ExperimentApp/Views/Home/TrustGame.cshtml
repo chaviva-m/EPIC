@@ -3,13 +3,13 @@
 @{
     ViewBag.Title = "TrustGame";
 }
-<h2>TrustGame</h2>
-<div dir="rtl" lang="he">
+<h2>Trust Game</h2>
+<div dir="rtl" lang="he" style="font-size:large">
     <p>כעת נשחק משחק נוסף:</p>
     <div>
         <p>נבחרת להיות השחקן המתחיל</p>
         <p>
-            במשחק הזה,שוב שניכם מקבלים 20 שקלים. השחקן המתחיל מקבל החלטה כמה כסף להעביר לשחקן השני.
+            במשחק הזה,שוב שניכם מקבלים 20 שקלים<img height="50" src="~/Content/images/20_shekel.jpg">. השחקן המתחיל מקבל החלטה כמה כסף להעביר לשחקן השני.
             הסכום ישולש- השחקן השני יקבל פי 3 מהסכום שהוחלט להעביר לו. כעת תורו של השחקן השני: הוא מחליט
             איזה סכום להעביר חזרה לשחקן הראשון. גם סכום זה ישולש, כלומר- השחקן הראשון יקבל פי 3 מהסכום שהשחקן
             השני החליט להעביר לו חזרה. שניכם תקבלו את הכסף בתום הניסוי.
@@ -24,6 +24,15 @@
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ExpOption)
+    @Html.HiddenFor(model => model.EmotionalContent)
+    @Html.HiddenFor(model => model.VideoEmotionsDataPath)
+    @Html.HiddenFor(model => model.VideoPath)
+    @Html.HiddenFor(model => model.AudioDataPath)
+    @Html.HiddenFor(model => model.UltimatumGaveSum)
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
         <legend>כמה כסף ברצונך לתת?</legend>
@@ -61,17 +70,19 @@
         document.getElementById("waitBtn").disabled = true;
         document.getElementById("myGif").style.display = "block";
         document.getElementById("msg").style.display = "block";
-        setTimeout("hide()", 5000);  // 5 seconds
+        setTimeout("hide()", 7000);  // 7 seconds
     }
 
     function hide() {
         document.getElementById("myGif").style.display = "none";
         document.getElementById("msg").style.display = "none";
-        document.getElementById("subForm").style.display = "block"
+        document.getElementById("subForm").style.display = "block";
+        document.getElementById("waitBtn").style.display = "none"
+
     }
 
     function validate() {
-        
+
         var e = document.getElementById("propId").value;
         if (e < 0 || e > @Model.TrustReceivedSum || Math.floor(e) != e ||e == "" || e.length == 0 || e == null) {
             alert("נא להזין מספר שלם בין 0 ל 20 ");

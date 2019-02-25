@@ -2,24 +2,38 @@
 @{
     ViewBag.Title = "UltimatumGame";
 }
-<h2>UltimatumGame</h2>
+<h2>Ultimatum Game</h2>
 <div dir="rtl" lang="he" style="font-size:large">
     <div dir="rtl" lang="he">
-        <p>נתחיל במשחק האולטימטום.אתה נבחרת להיות השחקן הראשון.</p>
+        <p>נתחיל במשחק האולטימטום.</p>
         <p>המשחק הולך כך:</p>
-        <p>שחקן נוסף יושב בחדר השני. יש ברשותך 20 ש"ח ואתה צריך להחליט כמה ברצונך להציע לו (אם בכלל).</p>
+        <p> שחקן נוסף יושב בחדר השני. אתה נבחרת להיות השחקן הראשון. </p>
+        <p> יש ברשותך 20 ש"ח <img height="50" src="~/Content/images/20_shekel.jpg">  ואתה צריך להחליט כמה ברצונך להציע לו (אם בכלל).</p> 
         <p>
-            אם השחקן השני יקבל את הצעתך- הסכום יחולק בהתאם (בתום הניסוי תקבל את החלק שלך מהנסיין).לעומת זאת, אם הוא יסרב להצעתך- אף אחד מכם לא יקבל תשלום. עד לסיום הניסוי לא תדע את החלטת השחקן השני.
+            אם השחקן השני יקבל את הצעתך- הסכום יחולק בהתאם (בתום הניסוי תקבל את החלק שלך מהנסיין).
         </p>
+        <p>
+            לעומת זאת, אם הוא יסרב להצעתך- אף אחד מכם לא יקבל תשלום.
+        </p>
+        <p>בסיום הניסוי תדע את החלטת השחקן השני.</p>
         <p>בהצלחה!</p>
     </div>
-    <input type="button" id="waitBtn" style="float: right" ; value="מוכנים להתחיל" onclick="show()"><br><br>
-    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/Gifs/giphy.gif"></div><br>
+    <input type="button" id="waitBtn" style="float: right" ; value="מוכנים להתחיל" onclick="show()"><br/><br/>
+    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/Gifs/giphy.gif"></div>
     <h1 id="msg" style="display:none">מחכים לשחקן השני...</h1>
 </div>
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ExpOption)
+    @Html.HiddenFor(model => model.EmotionalContent)
+    @Html.HiddenFor(model => model.VideoEmotionsDataPath)
+    @Html.HiddenFor(model => model.VideoPath)
+    @Html.HiddenFor(model => model.AudioDataPath)
+
+
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
     <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
         <legend>כמה כסף ברצונך לתת?</legend>
@@ -31,6 +45,7 @@
         </div>
         <div>
             <label>&nbsp;</label>
+            <br/>
             <input type="submit" value="Submit" class="submit" onclick="return validate()" />
         </div>
     </fieldset>
@@ -64,6 +79,7 @@
         document.getElementById("myGif").style.display = "none";
         document.getElementById("msg").style.display = "none";
         document.getElementById("subForm").style.display = "block"
+        document.getElementById("waitBtn").style.display = "none"
     }
 
     function validate() {

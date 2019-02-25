@@ -167,6 +167,7 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\images\20_shekel.jpg" />
     <Content Include="Content\images\emotion_words.jpg" />
     <Content Include="Content\images\emotion_words.png" />
     <Content Include="Content\videos\GreatBarrierReefAustrailia.mp4" />
