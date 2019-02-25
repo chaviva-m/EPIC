@@ -19,7 +19,6 @@ namespace ExperimentApp.Controllers
     {
         private ExperimentContext db = new ExperimentContext();
         private static readonly Video videoModel = new Video();
-        private static readonly Emotions SREs = new Emotions();
 
         public ActionResult Index()
         {
