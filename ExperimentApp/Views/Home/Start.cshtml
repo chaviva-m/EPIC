@@ -7,12 +7,21 @@
 <div>
     <h2>Start</h2>
     <br />
-    <p style="font-size:large" dir="rtl" lang="he">הניסוי מורכב מכמה חלקים. אנא קראו היטב את ההוראות והשתדלו להישאר מרוכזים במהלך הניסוי.</p>
-    <p style="font-size:large" dir="rtl" lang="he">תהנו! :)</p>
-    <p style="font-size:large" dir="rtl" lang="he">בתחילת הניסוי תצפו בסרטון.</p>
+    <div style="font-size:large" dir="rtl" lang="he">
+        <p>ברוכים הבאים!</p>
+        <p>תודה שבאתם להשתתף בניסוי.</p>
+        <p>אתם מוזמנים בכל שלב לפנות למפעיל הניסוי אם משהו לא ברור לכם.</p>
+        <p>*ההוראות מנוסחות לעיתים בלשון זכר ולעיתים בלשון נקבה, אך מיועדים לבני שני המינים*</p>
+        <br />
+        <p>הניסוי בו אתם עומדים להשתתף מורכב ממספר שלבים:</p>
+        <p>ראשית תצפו בסרטון, שלאחריו תתבקשו למלא שאלון קצר ולשתף במשפט אחד או שניים בתחושות שצפו במהלך הצפייה. </p>
+        <p>בשלב הבא תשתתפו בשני משחקים מהירים, מול שחקן נוסף המבצע את הניסוי במקום אחר (אונליין).</p>
+        <p>בהצלחה!</p>
+    </div>
+    <br />
     <p style="font-size:large" dir="rtl" lang="he">
         מוכנים להתחיל?
-        <br/><br/>
+        <br /><br />
         <input type="button" id="playVideo" dir="rtl" lang="he" value="המשך לסרטון" onclick="show()">
     </p>
 </div>
@@ -22,11 +31,6 @@
         <img height="300" ; src="~/Content/Gifs/loading.gif">
     </center>
 </div>
-
-@*<video controls="controls" id="videoPlayer" style="display:none" width="450" height="320">
-    <source src="@Url.Action("GetVideo", "Home", new {em = Model.EmotionalContent})" type="video/mp4">
-</video>*@
-
 
 <script type="text/javascript">
     //loading

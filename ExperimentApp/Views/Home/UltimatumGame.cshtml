@@ -2,94 +2,132 @@
 @{
     ViewBag.Title = "UltimatumGame";
 }
-<h2>Ultimatum Game</h2>
-<div dir="rtl" lang="he" style="font-size:large">
-    <div dir="rtl" lang="he">
-        <p>נתחיל במשחק האולטימטום.</p>
-        <p>אתה תשחק מול משתתף נוסף בניסוי היושב בחדר השני.</p>
-        <p> יש ברשותך 20 ש"ח <img height="50" src="~/Content/images/moneySmile.jpg"></p>
-        <p>אתה צריך להחליט כמה ברצונך להציע לו (אם בכלל).</p>
-        <p>
-            אם השחקן השני יקבל את הצעתך- הסכום יחולק בהתאם (בתום הניסוי תקבל את החלק שלך מהנסיין).
-        </p>
-        <p>
-            לעומת זאת, אם הוא יסרב להצעתך- אף אחד מכם לא יקבל תשלום.
-        </p>
-        <p>בסיום הניסוי תדע את החלטת השחקן השני.</p>
-        <p>בהצלחה!</p>
-        <p style="font-size:small">*ההוראות מנוסחות בלשון זכר אך מיועדות לנשים וגברים כאחד</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<html>
+@*<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+</head>*@
+<body>
+
+    <h2></h2>
+
+    <div id="generalInstructions" dir="rtl" lang="he" style="font-size:large" ,"text-align:center">
+        <p>כעת תשחק שני משחקים. </p>
+        <p>אנו נצרף אותך לשחקן נוסף שגם הוא משתתף בניסוי במקביל אליך.</p>
+        <p></p>
+        <p>לפני כל משחק יופיעו הוראות. אנא קרא אותם בעיון ואם משהו לא מובן פנה למפעיל הניסוי לפני שתתקדם למשחק.</p>
+        <h1 id="youStart" dir="rtl" lang="he" style="display:none;color:blueviolet;font-size:x-large">לצורך כל אחד מהמשחקים יש ברשותך 20 ש"ח</h1>
+        <h1 id="youStart" dir="rtl" lang="he" style="display:none;color:blueviolet;font-size:x-large">את החלטות השחקן השני תדע רק בתום הניסוי, כשמפעיל הניסוי יביא לך את סך הכסף שהרווחת במהלך שני המשחקים.</h1>
+        <p>*ההוראות מנוסחות בלשון זכר אך מיועדות לנשים וגברים כאחד.</p>
+        <input type="button" id="contBtn" style="float: right" ; value="המשך" onclick="showUltiInstructions()"><br /><br />
+        <div id="myGif1" style="display:none"><img id="waitingGif1" height="200" ; src="~/Content/Gifs/waiting.gif"></div>
+        <p id="msg1" style="display:none">מחכים לשחקן השני...</p>
     </div>
-    <input type="button" id="waitBtn" style="float: right" ; value="מוכנים להתחיל" onclick="show()"><br/><br/>
-    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/Gifs/giphy.gif"></div>
-    <h1 id="msg" style="display:none">מחכים לשחקן השני...</h1>
-</div>
-@using (Html.BeginForm())
-{
-    @Html.AntiForgeryToken()
-
-    @Html.HiddenFor(model => model.ID)
-    @Html.HiddenFor(model => model.ExpOption)
-    @Html.HiddenFor(model => model.EmotionalContent)
-    @Html.HiddenFor(model => model.VideoEmotionsDataPath)
-    @Html.HiddenFor(model => model.VideoPath)
-    @Html.HiddenFor(model => model.AudioDataPath)
-
-
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
-        <legend>כמה כסף ברצונך לתת?</legend>
-        <div>
-            <label for="proposal">סכום בש"ח (מספר שלם) </label>
+    <div id="ultiInstructions" style="display:none">
+        <div dir="rtl" lang="he" style="font-size:large">
+            <div dir="rtl" lang="he">
+                <h1>משחק ראשון:</h1>
+                <img height="500" src="~/Content/images/ultimatum_instructions.png" style="float:left" ;>
+                <p>זהו משחק בין 2 משתתפים המתרחש בשלושה שלבים:</p>
+                <p>בשלב הראשון- השחקן הראשון מקבל סכום כסף כלשהו שיעמוד לרשותו במהלך המשחק.</p>
+                <p>
+                    בשלב השני- השחקן הראשון מחליט כמה כסף מתוך סכום זה הוא רוצה להציע לשחקן השני (אם בכלל).
+                </p>
+                <p> בשלב השלישי- בפני השחקן השני עומדות שתי אופציות: הסכמה או סירוב.</p>
+                <p>אם יסכים - תבוצע הצעת השחקן הראשון. אם יסרב - שני השחקנים לא יקבלו דבר.</p>
+                <p>בהצלחה!</p>
+            </div>
+            <input type="button" id="waitBtn" style="float: right" ; value="לתחילת המשחק" onclick="show()"><br /><br />
+            <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/Gifs/waiting.gif"></div>
+            <p id="msg" style="display:none">מחכים לשחקן השני...</p>
         </div>
-        <div class="editor field">
-            @Html.TextBoxFor(model => model.UltimatumGaveSum, new { id = "propId" })
+    </div>
+
+    <center id="waitPage" style="display:none" align="middle">
+        <img id="waitingGif1" height="200" ; src="~/Content/Gifs/waiting.gif">
+        <p dir="rtl" lang="he" id="msg1">מחכים להחלטת השחקן השני...</p>
+    </center>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        @Html.HiddenFor(model => model.ID)
+        @Html.HiddenFor(model => model.ExpOption)
+        @Html.HiddenFor(model => model.EmotionalContent)
+        @Html.HiddenFor(model => model.VideoEmotionsDataPath)
+        @Html.HiddenFor(model => model.VideoPath)
+        @Html.HiddenFor(model => model.AudioDataPath)
+
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div id="inputField">
+            <h1 id="youStart" dir="rtl" lang="he" style="display:none;color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
+            <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
+                <legend>כמה כסף ברצונך להציע?</legend>
+                <div>
+                    <label for="proposal"> סכום בש"ח (מספר שלם בין 0 ל- 20) </label>
+                </div>
+                <div class="editor field">
+                    @Html.TextBoxFor(model => model.UltimatumGaveSum, new { id = "propId" })
+                </div>
+                <div>
+                    <label>&nbsp;</label>
+                    <br />
+                    <input id="submit" type="submit" value="Submit" class="submit" />
+                </div>
+            </fieldset>
         </div>
-        <div>
-            <label>&nbsp;</label>
-            <br/>
-            <input type="submit" value="Submit" class="submit" onclick="return validate()" />
-        </div>
-    </fieldset>
-}
-
-<script type="text/javascript">
-
-    window.addEventListener("DOMContentLoaded", function () {
-
-        // Get reference to drop down
-        var ddl = document.getElementById('quantitydropdownid');
-
-        for (var i = 0; i < 21; i++) {
-            var theOption = document.createElement("option");
-            theOption.text = i;
-            theOption.value = i;
-            // If it is the first option, make it be selected
-            i === 0 ? theOption.selected = "selected" : "";
-            ddl.options[i] = theOption;
-        }
-    });
+    }
+</body>
+</html>
+<script>
 
     function show() {
         document.getElementById("waitBtn").disabled = true;
         document.getElementById("myGif").style.display = "block";
         document.getElementById("msg").style.display = "block";
-        setTimeout("hide()", 5000);  // 5 seconds
+        setTimeout("hide()", 2000);  // 5 seconds
     }
 
     function hide() {
         document.getElementById("myGif").style.display = "none";
         document.getElementById("msg").style.display = "none";
-        document.getElementById("subForm").style.display = "block"
-        document.getElementById("waitBtn").style.display = "none"
-    }
-
-    function validate() {
-
-        var e = document.getElementById("propId").value;
-        if (e < 0 || e > @Model.TrustReceivedSum || Math.floor(e) != e ||e == "" || e.length == 0 || e == null) {
-            alert("נא להזין מספר שלם בין 0 ל 20 ");
-            return false;
+        document.getElementById("youStart").style.display = "block";
+        document.getElementById("subForm").style.display = "block";
+        document.getElementById("waitBtn").style.display = "none";
         }
+
+    function showUltiInstructions() {
+        document.getElementById("contBtn").disabled = true;
+        document.getElementById("myGif1").style.display = "block";
+        document.getElementById("msg1").style.display = "block";
+        setTimeout("hideUltiInstructions()", 2000);  // 5 seconds
     }
+
+    function hideUltiInstructions() {
+        document.getElementById("generalInstructions").style.display = "none";
+        document.getElementById("ultiInstructions").style.display = "block";
+    }
+
+    $(window).load(function () {
+        var submit = false;
+        $('#submit').on('click', function (e) {
+            var el = document.getElementById("propId").value;
+            if (el < 0 || el > @Model.UltimatumReceivedSum || Math.floor(el) != el || el == "" || el.length == 0 || el == null) {
+                alert("נא להזין מספר שלם בין 0 ל 20 ");
+                return false;
+            }else
+            $('#ultiInstructions').hide();
+            $('#inputField').hide();
+            $('#waitPage').show();
+            setTimeout(function () {
+                submit = true;
+                $("#submit").trigger("click"); // if you want            
+            }, 5000);
+            if (!submit)
+                e.preventDefault();
+        });
+    });
 
 </script>

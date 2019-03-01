@@ -167,10 +167,16 @@
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\Gifs\waiting.gif" />
     <Content Include="Content\images\20_shekel.jpg" />
     <Content Include="Content\images\emotion_words.jpg" />
     <Content Include="Content\images\emotion_words.png" />
     <Content Include="Content\images\moneySmile.jpg" />
+    <Content Include="Content\images\play1.jpg" />
+    <Content Include="Content\images\trust_instructions.png" />
+    <Content Include="Content\images\ulti3.png" />
+    <Content Include="Content\images\ultimatum_instructions.png" />
+    <Content Include="Content\images\utli2.png" />
     <Content Include="Content\videos\GreatBarrierReefAustrailia.mp4" />
     <Content Include="Content\videos\LionKing.mp4" />
     <Content Include="Content\videos\shortTemp.mp4" />
@@ -229,9 +235,7 @@
     <Content Include="Views\Home\Finish.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Content\Gifs\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

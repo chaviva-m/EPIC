@@ -3,29 +3,34 @@
 @{
     ViewBag.Title = "TrustGame";
 }
-<h2>Trust Game</h2>
-<div dir="rtl" lang="he" style="font-size:large">
-    <p>כעת נשחק משחק נוסף:</p>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<h2></h2>
+<div id="trustInstructions" dir="rtl" lang="he" style="font-size:large">
+    <h1>משחק שני:</h1>
+    <img height="500" src="~/Content/images/trust_instructions.png" style="float:left" ;>
     <div>
-        <font color="red">נבחרת להיות השחקן המתחיל</font>
-        <p>במשחק הזה, שוב שניכם מקבלים 20 שקלים.</p>
-        <p>
-            השחקן המתחיל מקבל החלטה כמה כסף להעביר לשחקן השני.
-            הסכום ישולש- השחקן השני יקבל פי 3 מהסכום שהוחלט להעביר לו.
-        </p>
-        <p>
-            כעת תורו של השחקן השני: הוא מחליט איזה סכום להעביר חזרה לשחקן הראשון.
-        </p>
-        <p> בתום הניסוי תגלה מה הייתה החלטת השחקן השני, כאשר שניכם תקבלו את הכסף מהנסיין.</p>
 
-
+        <p>זהו משחק בין 2 משתתפים המתרחש בשני שלבים:</p>
+        <p>
+            בשלב הראשון- שני השחקנים סכום כסף כלשהו. השחקן הראשון מחליט כמה מתוך סכום זה הוא רוצה להציע לשחקן השני (אם בכלל).
+        </p>
+        <p> סכום זה יוכפל פי 3 ויועבר לשחקן השני, כלומר- השחקן השני יקבל פי 3 מהסכום שהשחקן הראשון הציע לו.</p>
+        <p>
+            בשלב השני- מגיע תורו של השחקן השני. הוא מחליט כמה כסף, מתוך הסכום שקיבל מהשחקן הראשון, הוא רוצה להעביר לשחקן הראשון בחזרה (אם בכלל).
+        </p>
+        <p>השחקן הראשון יקבל לידיו את הסכום שהשחקן השני החליט להעביר לו בחזרה.</p>
         <p>בהצלחה!</p>
-        <p style="font-size:small">*ההוראות מנוסחות בלשון זכר אך מיועדות לנשים וגברים כאחד</p>
     </div>
-    <input type="button" id="waitBtn" style="float: right" ; value="מוכנים להתחיל" onclick="show()"><br><br>
-    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/giphy.gif"></div><br>
-    <h1 id="msg" style="display:none">מחכים לשחקן השני...</h1>
+    <input type="button" id="waitBtn" style="float: right" ; value="לתחילת המשחק" onclick="show()"><br /><br />
+    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/Gifs/waiting.gif"></div>
+    <p id="msg" style="display:none">מחכים לשחקן השני...</p>
 </div>
+
+<center id="waitPage" style="display:none" align="middle">
+    <img id="waitingGif1" height="200" ; src="~/Content/Gifs/waiting.gif">
+    <p dir="rtl" lang="he" id="msg1">מחכים להחלטת השחקן השני...</p>
+</center>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -39,60 +44,61 @@
     @Html.HiddenFor(model => model.UltimatumGaveSum)
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+<div id="inputField">
+    <h1 id="youStart" dir="rtl" lang="he" style="display:none;color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
+
     <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
-        <legend>כמה כסף ברצונך לתת?</legend>
+        <legend>כמה כסף ברצונך להציע?</legend>
         <div>
-            <label for="proposal">סכום בש"ח (מספר שלם) </label>
+            <label for="proposal">סכום בש"ח (מספר שלם בין 0 ל- 20 ) </label>
         </div>
         <div class="editor field">
             @Html.TextBoxFor(model => model.TrustGaveSum, new { id = "propId" })
         </div>
         <div>
             <label>&nbsp;</label>
-            <input type="submit" value="Submit" class="submit" onclick="return validate()" />
+            <input id="submit" type="submit" value="Submit" class="submit" />
         </div>
     </fieldset>
+</div>
 }
 
-<script type="text/javascript">
-
-    window.addEventListener("DOMContentLoaded", function () {
-
-        // Get reference to drop down
-        var ddl = document.getElementById('quantitydropdownid');
-
-        for (var i = 0; i < 21; i++) {
-            var theOption = document.createElement("option");
-            theOption.text = i;
-            theOption.value = i;
-            // If it is the first option, make it be selected
-            i === 0 ? theOption.selected = "selected" : "";
-            ddl.options[i] = theOption;
-        }
-    });
+<script>
 
     function show() {
         document.getElementById("waitBtn").disabled = true;
         document.getElementById("myGif").style.display = "block";
         document.getElementById("msg").style.display = "block";
-        setTimeout("hide()", 7000);  // 7 seconds
+        setTimeout("hide()", 3000);  // 7 seconds
     }
 
     function hide() {
         document.getElementById("myGif").style.display = "none";
         document.getElementById("msg").style.display = "none";
         document.getElementById("subForm").style.display = "block";
+        document.getElementById("youStart").style.display = "block";
         document.getElementById("waitBtn").style.display = "none"
 
     }
 
-    function validate() {
-
-        var e = document.getElementById("propId").value;
-        if (e < 0 || e > @Model.TrustReceivedSum || Math.floor(e) != e ||e == "" || e.length == 0 || e == null) {
-            alert("נא להזין מספר שלם בין 0 ל 20 ");
-            return false;
-        }
-    }
+   $(window).load(function () {
+        var submit = false;
+        $('#submit').on('click', function (e) {
+            var el = document.getElementById("propId").value;
+            if (el < 0 || el > @Model.TrustReceivedSum || Math.floor(el) != el || el == "" || el.length == 0 || el == null) {
+                alert("נא להזין מספר שלם בין 0 ל 20 ");
+                return false;
+            }else
+            $('#trustInstructions').hide();
+            $('#inputField').hide();
+            $('#waitPage').show();
+            setTimeout(function () {
+                submit = true;
+                $("#submit").trigger("click"); // if you want            
+            }, 5000);
+            if (!submit)
+                e.preventDefault();
+        });
+    });
 
 </script>

@@ -49,7 +49,7 @@ namespace ExperimentApp.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "ExpOption")] Participant participant)
+        public ActionResult Create([Bind(Include = "ExpOption,ID")] Participant participant)
         {
             try
             {

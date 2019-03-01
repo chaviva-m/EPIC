@@ -11,6 +11,7 @@ namespace ExperimentApp.Models
 {
     public class Participant
     {
+        [DatabaseGenerated(DatabaseGeneratedOption.None)]
         public int ID { get; set; }
 
         //induced emotion
