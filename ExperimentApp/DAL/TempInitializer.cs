@@ -12,17 +12,17 @@ namespace ExperimentApp.DAL
     {
         protected override void Seed(ExperimentContext context)
         {
-            var participants = new List<Participant>
-            {
-                new Participant{EmotionalContent=EmotionalContentEnum.Happy, VideoPath="parVideo.mp4",
-                VideoDataPath="parVideoData", //VideoEmotionFrequencies=new Dictionary<string, double>{ { "happy", 0.52 } },
-                AudioDataPath="parAudio.wav", //AudioEmotionFrequencies=new Dictionary<string, double>{{"happy",0.4}},
-                UltimatumGaveSum=2,
-                TrustGaveSum=10 }
-            };
+            //var participants = new List<Participant>
+            //{
+            //    new Participant{EmotionalContent=EmotionalContentEnum.Happy, VideoPath="parVideo.mp4",
+            //    VideoDataPath="parVideoData", //VideoEmotionFrequencies=new Dictionary<string, double>{ { "happy", 0.52 } },
+            //    AudioDataPath="parAudio.wav", //AudioEmotionFrequencies=new Dictionary<string, double>{{"happy",0.4}},
+            //    UltimatumGaveSum=2,
+            //    TrustGaveSum=10 }
+            //};
 
-            participants.ForEach(s => context.Participants.Add(s));
-            context.SaveChanges();
+            //participants.ForEach(s => context.Participants.Add(s));
+            //context.SaveChanges();
 
         }
     }

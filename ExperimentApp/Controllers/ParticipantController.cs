@@ -61,9 +61,15 @@ namespace ExperimentApp.Controllers
                 }
             } catch(DataException e)
             {
-                ModelState.AddModelError("", "Unable to save changes." + e.Message);
-                TempData["ErrorMessage"] =  "שגיאה באתחול הנבדק " + e.Message;
-                return RedirectToAction("Error");
+                if (db.Participants.Find(participant.ID) != null)
+                {
+                    TempData["ErrorMessage"] = "מספר הזיהוי שהזנת כבר קיים במערכת. אנא חזור ונסה מספר זיהוי אחר.";
+                } else
+                {
+                    ModelState.AddModelError("", "Unable to save changes." + e.Message);
+                    TempData["ErrorMessage"] = "שגיאה באתחול הנבדק " + e.Message;
+                }
+                return RedirectToAction("Error", "Home");
 
             }
             return View(participant);
