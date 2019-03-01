@@ -12,6 +12,11 @@ namespace ExperimentApp.Infrastructure
         Neutral
     }
 
+    public enum ExperimentOptionEnum
+    {
+        A, B, C
+    }
+
     public class EmotionInducingContent
     {
         public static string VideoRootDir = "~/Content/videos/";

@@ -29,7 +29,7 @@
         <button id="recordButton">Record</button>
         <button id="pauseButton" disabled style="display:none">Pause</button>
         <button id="stopButton" disabled>Stop</button>
-        <h1 id="participantId" style="display:none">@Model.ID</h1>
+        <h1 id="fileName" style="display:none">@Model.AudioPath</h1>
 
     </div>
     <div id="formats" disabled style="display:none">Format: start recording to see sample rate</div>
@@ -45,6 +45,6 @@
 </html>
 <script type="text/javascript">
     function myFunc() {
-        window.location.href = '@Url.Action("UltimatumGame", new { id = Model.ID })';
+        window.location.href = '@Url.Action("FinishedAudioRecording", new { id = Model.ID })'; //"UltimatumGame"
     }
 </script>

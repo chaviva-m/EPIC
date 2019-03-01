@@ -1,2 +1,4 @@
-cd C:\Users\leah\Desktop\python_projects\Emotion\  
-start "Python Script" /MIN python emotions.py "%1" -o "%2"
+cd %1
+start "%2" /MIN emotions.py %3 -o %4 -w %5
+
+

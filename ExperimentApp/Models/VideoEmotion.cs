@@ -7,7 +7,9 @@ namespace ExperimentApp.Models
 {
     public class VideoEmotion
     {
-        public int ID;
-        public string Emotion { get; set; }
+        public int ID { get; set; }
+        public int ParticipantID { get; set; }
+        public string Name { get; set; }
+        public double Strength { get; set; }
     }
 }
