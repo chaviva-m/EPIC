@@ -13,8 +13,10 @@ namespace ExperimentApp.DAL
         public ExperimentContext() : base("ExperimentContext") { }  //see Tutorial Connection Strings and Models
 
         public DbSet<Participant> Participants { get; set; }
+        public DbSet<AudioEmotion> AudioEmotions { get; set; }
         public DbSet<SelfReportEmotion> SelfReportEmotions { get; set; }
         public DbSet<SelfReportQuestionnaire> SelfReportQuestionnaires { get; set; }
+       
         
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {

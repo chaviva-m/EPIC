@@ -19,6 +19,7 @@ namespace ExperimentApp.Controllers
     {
         private ExperimentContext db = new ExperimentContext();
         private static readonly Video videoModel = new Video();
+        private static readonly Audio audioModel = new Audio();
 
         public ActionResult Index()
         {
@@ -52,8 +53,8 @@ namespace ExperimentApp.Controllers
             {
                 return HttpNotFound();
             }
-            bool finished = videoModel.RecordVideo(participant);
-            if (finished == false)
+            bool result = videoModel.RecordVideo(participant);
+            if (result == false)
             {
                 TempData["ErrorMessage"] = "שגיאה בהקלטת הוידאו";
                 return RedirectToAction("Error");
@@ -85,7 +86,11 @@ namespace ExperimentApp.Controllers
                 return HttpNotFound();
             }
             videoModel.StopRecording();
-            return RedirectToAction("Audio", new { id = participant.ID });   //change to different page
+            //save emotions in database
+            videoModel.GetEmotionsFromFile(participant);
+            db.Entry(participant).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("Audio", new { id = participant.ID });
         }
 
         public ActionResult Audio(int? id)
@@ -99,12 +104,37 @@ namespace ExperimentApp.Controllers
             {
                 return HttpNotFound();
             }
+            //add audio file name
+            participant.AudioPath = "Audio" + participant.ID + ".wav";
+            db.Entry(participant).State = EntityState.Modified;
+            db.SaveChanges();
             return View(participant);
+        }
+
+        public ActionResult FinishedAudioRecording(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
+            bool result = audioModel.RunVokaturi(participant);
+            if (result) {
+                //save emotions in database
+                audioModel.GetEmotionsFromFile(participant);
+            }
+            db.Entry(participant).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("SelfReport", new { id = participant.ID });
         }
 
 
         [HttpGet]
-        public ActionResult UltimatumGame(int? id)
+        public ActionResult GameA(int? id)
         {
             if (id == null)
             {
@@ -119,20 +149,20 @@ namespace ExperimentApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult UltimatumGame(Participant participant)
+        public ActionResult GameA(Participant participant)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(participant).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("TrustGame", new { id = participant.ID });
+                return RedirectToAction("GameB", new { id = participant.ID });
             }
 
             return View(participant);
         }
 
         [HttpGet]
-        public ActionResult TrustGame(int? id)
+        public ActionResult GameB(int? id)
         {
             if (id == null)
             {
@@ -147,13 +177,13 @@ namespace ExperimentApp.Controllers
         }
 
         [HttpPost]
-        public ActionResult TrustGame(Participant participant)
+        public ActionResult GameB(Participant participant)
         {
             if (ModelState.IsValid)
             {
                 db.Entry(participant).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("SelfReport", new { id = participant.ID });
+                return RedirectToAction("Finish");
             }
 
             return View(participant);
@@ -173,12 +203,14 @@ namespace ExperimentApp.Controllers
             }
 
             //add self report questionnaire
-            participant.SelfReportQuestionnaire = new SelfReportQuestionnaire();
-            participant.SelfReportQuestionnaire.ParticipantID = participant.ID;
+            participant.SelfReportQuestionnaire = new SelfReportQuestionnaire
+            {
+                ParticipantID = participant.ID
+            };
             List<SelfReportEmotion> emotions = new List<SelfReportEmotion>();
             foreach (string emotion in Emotions.SelfReportEmotions)
             {
-                emotions.Add(new SelfReportEmotion { SelfReportQuestionnaireID = participant.SelfReportQuestionnaire.ID, Name = emotion });
+                emotions.Add(new SelfReportEmotion { ParticipantID = participant.ID, Name = emotion });
             }
             participant.SelfReportQuestionnaire.Emotions = emotions;
 
@@ -204,7 +236,8 @@ namespace ExperimentApp.Controllers
                 db.Entry(selfReportQuestionnaire).State = EntityState.Modified;
                 db.SaveChanges();
             }
-            return RedirectToAction("Finish");
+            int participantID = selfReportQuestionnaire.ParticipantID;
+            return RedirectToAction("GameA", new { id = participantID });
         }
 
         public ActionResult Finish()

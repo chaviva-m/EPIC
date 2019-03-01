@@ -15,8 +15,8 @@ namespace ExperimentApp.DAL
             var participants = new List<Participant>
             {
                 new Participant{EmotionalContent=EmotionalContentEnum.Happy, VideoPath="parVideo.mp4",
-                VideoEmotionsDataPath="parVideoData", VideoEmotionFrequencies=new Dictionary<string, double>{ { "happy", 0.52 } },
-                AudioDataPath="parAudio.wav", AudioEmotionFrequencies=new Dictionary<string, double>{{"happy",0.4}},
+                VideoDataPath="parVideoData", //VideoEmotionFrequencies=new Dictionary<string, double>{ { "happy", 0.52 } },
+                AudioDataPath="parAudio.wav", //AudioEmotionFrequencies=new Dictionary<string, double>{{"happy",0.4}},
                 UltimatumGaveSum=2,
                 TrustGaveSum=10 }
             };

@@ -1,0 +1,99 @@
+﻿@model ExperimentApp.Models.Participant
+@Html.Hidden("TrustGaveSum", Model.TrustGaveSum)
+@{
+    ViewBag.Title = "Game B";
+}
+<h1></h1>
+<div dir="rtl" lang="he" style="font-size:large">
+    <p>כעת נשחק משחק נוסף:</p>
+    <div>
+        <font color="red">נבחרת להיות השחקן המתחיל</font>
+        <p>במשחק הזה, שוב שניכם מקבלים 20 שקלים.</p>
+        <p>
+            השחקן המתחיל מקבל החלטה כמה כסף להעביר לשחקן השני.
+            הסכום ישולש- השחקן השני יקבל פי 3 מהסכום שהוחלט להעביר לו.
+        </p>
+        <p>
+            כעת תורו של השחקן השני: הוא מחליט איזה סכום להעביר חזרה לשחקן הראשון.
+        </p>
+        <p> בתום הניסוי תגלה מה הייתה החלטת השחקן השני, כאשר שניכם תקבלו את הכסף מהנסיין.</p>
+
+
+        <p>בהצלחה!</p>
+        <p style="font-size:small">*ההוראות מנוסחות בלשון זכר אך מיועדות לנשים וגברים כאחד</p>
+    </div>
+    <input type="button" id="waitBtn" style="float: right" ; value="מוכנים להתחיל" onclick="show()"><br><br>
+    <div id="myGif" style="display:none"><img id="waitingGif" height="200" ; src="~/Content/giphy.gif"></div><br>
+    <h1 id="msg" style="display:none">מחכים לשחקן השני...</h1>
+</div>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    @Html.HiddenFor(model => model.ID)
+    @Html.HiddenFor(model => model.ExpOption)
+    @Html.HiddenFor(model => model.EmotionalContent)
+    @Html.HiddenFor(model => model.VideoPath)
+    @Html.HiddenFor(model => model.VideoDataPath)
+    @Html.HiddenFor(model => model.AudioPath)
+    @Html.HiddenFor(model => model.AudioDataPath)
+    @Html.HiddenFor(model => model.UltimatumGaveSum)
+
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
+        <legend>כמה כסף ברצונך להציע?</legend>
+        <div>
+            <label for="proposal">סכום בש"ח (מספר שלם) </label>
+        </div>
+        <div class="editor field">
+            @Html.TextBoxFor(model => model.TrustGaveSum, new { id = "propId" })
+        </div>
+        <div>
+            <label>&nbsp;</label>
+            <input type="submit" value="Submit" class="submit" onclick="return validate()" />
+        </div>
+    </fieldset>
+}
+
+<script type="text/javascript">
+
+    window.addEventListener("DOMContentLoaded", function () {
+
+        // Get reference to drop down
+        var ddl = document.getElementById('quantitydropdownid');
+
+        for (var i = 0; i < 21; i++) {
+            var theOption = document.createElement("option");
+            theOption.text = i;
+            theOption.value = i;
+            // If it is the first option, make it be selected
+            i === 0 ? theOption.selected = "selected" : "";
+            ddl.options[i] = theOption;
+        }
+    });
+
+    function show() {
+        document.getElementById("waitBtn").disabled = true;
+        document.getElementById("myGif").style.display = "block";
+        document.getElementById("msg").style.display = "block";
+        setTimeout("hide()", 7000);  // 7 seconds
+    }
+
+    function hide() {
+        document.getElementById("myGif").style.display = "none";
+        document.getElementById("msg").style.display = "none";
+        document.getElementById("subForm").style.display = "block";
+        document.getElementById("waitBtn").style.display = "none"
+
+    }
+
+    function validate() {
+
+        var e = document.getElementById("propId").value;
+        if (e < 0 || e > @Model.TrustReceivedSum || Math.floor(e) != e ||e == "" || e.length == 0 || e == null) {
+            alert("נא להזין מספר שלם בין 0 ל 20 ");
+            return false;
+        }
+    }
+
+</script>

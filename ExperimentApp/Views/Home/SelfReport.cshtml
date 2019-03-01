@@ -18,7 +18,7 @@
     for (int i = 0; i < Model.Emotions.Count; i++)
     {
         @Html.HiddenFor(model => Model.Emotions[i].ID)
-        @Html.HiddenFor(model => Model.Emotions[i].SelfReportQuestionnaireID)
+        @Html.HiddenFor(model => Model.Emotions[i].ParticipantID)
         @Html.HiddenFor(model => Model.Emotions[i].Name)
     }
     <div class="form-horizontal">

@@ -15,40 +15,27 @@ namespace ExperimentApp.Models
 
         //induced emotion
         private EmotionalContentEnum emotionalContent;
-        public EmotionalContentEnum EmotionalContent { get { return emotionalContent; } set { emotionalContent = value; ExpOption = Convert.ToInt32(emotionalContent); } }
+        public EmotionalContentEnum EmotionalContent { get { return emotionalContent; } set { emotionalContent = value; ExpOption = (ExperimentOptionEnum)Convert.ToInt32(emotionalContent); } }
         //experiment option
-        private int expOption ;
+        private ExperimentOptionEnum expOption;
         [Display(Name = "Experiment Option")]
-        public int ExpOption { get { return expOption; } set { expOption = value; emotionalContent = (EmotionalContentEnum)expOption; } }
-        public SelectList ExpOptionList
-
-        {
-            get
-            {
-                List<int> Options = new List<int>();
-                foreach (int content in Enum.GetValues(typeof(EmotionalContentEnum))) { Options.Add(content); }
-                SelectList expOptions = new SelectList(Options);
-                return expOptions;
-            }
-        }
+        public ExperimentOptionEnum ExpOption { get { return expOption; } set { expOption = value; emotionalContent = (EmotionalContentEnum)Convert.ToInt32(expOption); } }
 
         //emotions from video
         public string VideoPath { get; set; }
-        public string VideoEmotionsDataPath { get; set; }
-        //CHANGE this to a list of VideoEmotion / a class that holds that list
-        public Dictionary<string, double> VideoEmotionFrequencies { get; set; }
+        public string VideoDataPath { get; set; }
+        public virtual List<VideoEmotion> VideoEmotions { get; set; }
 
         //emotions from audio
+        public string AudioPath { get; set; }
         public string AudioDataPath { get; set; }
-        //CHANGE this to a list of AudioEmotion / a class that holds that list
-        public Dictionary<string, double> AudioEmotionFrequencies { get; set; }
+        public virtual List<AudioEmotion> AudioEmotions { get; set; }
 
         //emotions - self report
         public SelfReportQuestionnaire SelfReportQuestionnaire { get; set; }
 
         //Ultimatum Game
         public int UltimatumReceivedSum { get; } = 20;
-
         private int ultimatumGaveSum;
         [Required(ErrorMessage = "שדה חובה")]
         [Range(0, 20, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 20")]
@@ -57,7 +44,6 @@ namespace ExperimentApp.Models
         public float UltimatumGavePercent { get; private set; }
 
         //Trust Game
-
         public int TrustReceivedSum { get; } = 20;
         private int trustGaveSum;
         [Required(ErrorMessage = "שדה חובה")]

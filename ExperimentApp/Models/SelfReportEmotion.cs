@@ -9,7 +9,7 @@ namespace ExperimentApp.Models
     public class SelfReportEmotion
     {
         public int ID { get; set; }
-        public int SelfReportQuestionnaireID { get; set; }
+        public int ParticipantID { get; set; }
         public string Name { get; set; }
         public int Strength { get; set; }
     }

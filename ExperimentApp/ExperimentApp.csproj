@@ -148,8 +148,10 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\Directories.cs" />
     <Compile Include="Infrastructure\EmotionalContent.cs" />
     <Compile Include="Infrastructure\Emotions.cs" />
+    <Compile Include="Models\Audio.cs" />
     <Compile Include="Models\AudioEmotion.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\SelfReportEmotion.cs" />
@@ -180,6 +182,7 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\app.js" />
+    <None Include="Scripts\AudioEmotionDetector\run_vokaturi.bat" />
     <Content Include="Scripts\upload.php" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -221,8 +224,8 @@
     <Content Include="Views\Home\Video.cshtml" />
     <Content Include="Scripts\VideoEmotionDetector\run_emotions.bat" />
     <Content Include="Views\Home\Audio.cshtml" />
-    <Content Include="Views\Home\UltimatumGame.cshtml" />
-    <Content Include="Views\Home\TrustGame.cshtml" />
+    <Content Include="Views\Home\GameA.cshtml" />
+    <Content Include="Views\Home\GameB.cshtml" />
     <Content Include="Views\Home\Start.cshtml" />
     <Content Include="Views\Participant\CreateOriginal.cshtml" />
     <Content Include="Views\Home\SelfReport.cshtml" />
@@ -231,6 +234,8 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Content\Gifs\" />
+    <Folder Include="Data\Audio\" />
+    <Folder Include="Data\Video\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
