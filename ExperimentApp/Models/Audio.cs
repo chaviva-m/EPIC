@@ -80,23 +80,24 @@ namespace ExperimentApp.Models
         {
             string fileRelPath = dataRelDir + '\\' + participant.AudioDataPath;
             string filePath = HttpContext.Current.Server.MapPath(Path.Combine("~", fileRelPath));
-            IEnumerable<string> lines;
+            //IEnumerable<string> lines;
             try
             {
-                lines = File.ReadLines(filePath);
-            } catch {
-                return;
-            }
-            string[] data;
-            foreach (var line in lines)
-            {
-                data = line.Split('\t');
-                participant.AudioEmotions.Add(new AudioEmotion
+                var lines = File.ReadLines(filePath);
+                string[] data;
+                foreach (var line in lines)
                 {
-                    ParticipantID = participant.ID,
-                    Name = data[0],
-                    Strength = Convert.ToDouble(data[1])
-                });    
+                    data = line.Split('\t');
+                    participant.AudioEmotions.Add(new AudioEmotion
+                    {
+                        ParticipantID = participant.ID,
+                        Name = data[0],
+                        Strength = Convert.ToDouble(data[1])
+                    });
+                }
+            } catch
+            {
+                return;
             }
         }
     }

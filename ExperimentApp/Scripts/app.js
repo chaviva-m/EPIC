@@ -104,7 +104,7 @@ function createDownloadLink(blob) {
     var link = document.createElement('a');
 
     //name of .wav file to use during upload and download (without extendion)
-    var filename = "" + document.getElementById("fileName").innerHTML;
+    var filename = document.getElementById("fileName").innerHTML;
 
     //add controls to the <audio> element
     au.controls = true;

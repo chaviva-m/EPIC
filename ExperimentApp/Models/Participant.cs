@@ -30,7 +30,7 @@ namespace ExperimentApp.Models
         //emotions from audio
         public string AudioPath { get; set; }
         public string AudioDataPath { get; set; }
-        public virtual List<AudioEmotion> AudioEmotions { get; set; }
+        public virtual List<AudioEmotion> AudioEmotions { get; set; } = new List<AudioEmotion>();
 
         //emotions - self report
         public SelfReportQuestionnaire SelfReportQuestionnaire { get; set; }

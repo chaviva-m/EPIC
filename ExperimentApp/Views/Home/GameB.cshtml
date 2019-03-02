@@ -11,14 +11,14 @@
     <div>
 
         <p>זהו משחק בין 2 משתתפים המתרחש בשני שלבים:</p>
+        <p>בשלב הראשון- השחקן הראשון מקבל סכום כסף כלשהו.</p>
         <p>
-            בשלב הראשון- שני השחקנים סכום כסף כלשהו. השחקן הראשון מחליט כמה מתוך סכום זה הוא רוצה להציע לשחקן השני (אם בכלל).
+            בשלב השני- השחקן הראשון מחליט כמה מתוך סכום זה הוא רוצה להציע לשחקן השני (אם בכלל).
         </p>
         <p> סכום זה יוכפל פי 3 ויועבר לשחקן השני, כלומר- השחקן השני יקבל פי 3 מהסכום שהשחקן הראשון הציע לו.</p>
         <p>
-            בשלב השני- מגיע תורו של השחקן השני. הוא מחליט כמה כסף, מתוך הסכום שקיבל מהשחקן הראשון, הוא רוצה להעביר לשחקן הראשון בחזרה (אם בכלל).
+            בשלב השלישי- מגיע תורו של השחקן השני. הוא מחליט כמה כסף, מתוך הסכום שקיבל מהשחקן הראשון, הוא רוצה להעביר לשחקן הראשון בחזרה (אם בכלל).
         </p>
-        <p>השחקן הראשון יקבל לידיו את הסכום שהשחקן השני החליט להעביר לו בחזרה.</p>
         <p>בהצלחה!</p>
     </div>
     <input type="button" id="waitBtn" style="float: right" ; value="לתחילת המשחק" onclick="show()"><br /><br />
@@ -46,12 +46,16 @@
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 <div id="inputField">
-    <h1 id="youStart" dir="rtl" lang="he" style="display:none;color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
+    <div id="youStart" style="display:none" dir="rtl" lang="he">
+        <h1 style="color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
+        <b style="font-size:large">יש ברשותך 10 שקלים</b>
+        <br />
+    </div>
 
     <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
         <legend>כמה כסף ברצונך להציע?</legend>
         <div>
-            <label for="proposal">סכום בש"ח (מספר שלם בין 0 ל- 20 ) </label>
+            <label for="proposal">סכום בש"ח (מספר שלם בין 0 ל- 10 ) </label>
         </div>
         <div class="editor field">
             @Html.TextBoxFor(model => model.TrustGaveSum, new { id = "propId" })
@@ -87,7 +91,7 @@
         $('#submit').on('click', function (e) {
             var el = document.getElementById("propId").value;
             if (el < 0 || el > @Model.TrustReceivedSum || Math.floor(el) != el || el == "" || el.length == 0 || el == null) {
-                alert("נא להזין מספר שלם בין 0 ל 20 ");
+                alert("נא להזין מספר שלם בין 0 ל 10 ");
                 return false;
             }else
             $('#trustInstructions').hide();

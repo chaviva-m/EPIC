@@ -129,6 +129,9 @@ namespace ExperimentApp.Models
             string fileRelPath = dataRelDir + '\\' + participant.VideoDataPath;
             string filePath = HttpContext.Current.Server.MapPath(Path.Combine("~", fileRelPath));
             List<string> emotionsLabels;
+            try
+            { 
+
             using (StreamReader sr = File.OpenText(filePath))
             {
                 emotionsLabels = sr.ReadLine().Split('\t').ToList();
@@ -154,6 +157,11 @@ namespace ExperimentApp.Models
                     Strength = freq
                 });
             }
+            } catch (Exception e)
+            {
+                return;
+            }
+
         }
     }
 }
