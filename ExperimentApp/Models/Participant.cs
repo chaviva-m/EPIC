@@ -36,19 +36,19 @@ namespace ExperimentApp.Models
         public SelfReportQuestionnaire SelfReportQuestionnaire { get; set; }
 
         //Ultimatum Game
-        public int UltimatumReceivedSum { get; } = 20;
+        public int UltimatumReceivedSum { get; } = 10;
         private int ultimatumGaveSum;
         [Required(ErrorMessage = "שדה חובה")]
-        [Range(0, 20, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 20")]
+        [Range(0, 10, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 10")]
         [Display(Name = "הצעה")]
         public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100; } }
         public float UltimatumGavePercent { get; private set; }
 
         //Trust Game
-        public int TrustReceivedSum { get; } = 20;
+        public int TrustReceivedSum { get; } = 10;
         private int trustGaveSum;
         [Required(ErrorMessage = "שדה חובה")]
-        [Range(0, 20, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 20")]
+        [Range(0, 10, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 10")]
         [Display(Name = "הצעה")]
         public int TrustGaveSum { get { return trustGaveSum; }  set { trustGaveSum = value; TrustGavePercent = (trustGaveSum / (float)TrustReceivedSum) * 100; } }
         public float TrustGavePercent { get; private set; }

@@ -20,7 +20,6 @@
     <br />
     <p style="font-size:large" dir="rtl" lang="he">
         מוכנים להתחיל?
-        <br /><br />
         <input type="button" id="playVideo" dir="rtl" lang="he" value="המשך לסרטון" onclick="show()">
     </p>
 </div>
@@ -36,7 +35,7 @@
     function show() {
         document.getElementById("playVideo").disabled = true;
         document.getElementById("myGif").style.display = "block";
-        window.location.href = '@Url.Action("GameB", "Home", new { id = Model.ID }, null)';
+        window.location.href = '@Url.Action("Video", "Home", new { id = Model.ID }, null)';
         //GetTransactionBuyingRate();
     }
 
