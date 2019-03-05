@@ -127,7 +127,12 @@ namespace ExperimentApp.Controllers
             bool result = audioModel.RunVokaturi(participant);
             if (result) {
                 //save emotions in database
-                audioModel.GetEmotionsFromFile(participant);
+                result = audioModel.GetEmotionsFromFile(participant);
+                if (!result)
+                {
+                    TempData["ErrorMessage"] = "הקלטתך לא נרשמה. אנא נסה שנית. אנא השתדל לדבר בקול רם וברור.";
+                    return RedirectToAction("Audio", new { id = participant.ID });
+                }
             }
             db.Entry(participant).State = EntityState.Modified;
             db.SaveChanges();

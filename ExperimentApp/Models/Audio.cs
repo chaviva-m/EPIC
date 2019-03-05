@@ -76,13 +76,21 @@ namespace ExperimentApp.Models
             return true;
         }
 
-        public void GetEmotionsFromFile(Participant participant)
+        public bool GetEmotionsFromFile(Participant participant)
         {
+            //audio file
+            string audioPathSource = Directories.AudioFile + '\\' + participant.AudioPath;
+            string audioRelPathDest = dataRelDir + '\\' + participant.AudioPath;
+            string audioPathDest = HttpContext.Current.Server.MapPath(Path.Combine("~", audioRelPathDest));
+            //move audio file in Data folder
+            MoveFile(audioPathSource, audioPathDest, out bool result);
+
+            //audio data file
             string fileRelPath = dataRelDir + '\\' + participant.AudioDataPath;
             string filePath = HttpContext.Current.Server.MapPath(Path.Combine("~", fileRelPath));
-            //IEnumerable<string> lines;
             try
             {
+                //save emotions from audio data file
                 var lines = File.ReadLines(filePath);
                 string[] data;
                 foreach (var line in lines)
@@ -95,10 +103,40 @@ namespace ExperimentApp.Models
                         Strength = Convert.ToDouble(data[1])
                     });
                 }
+                return true;
             } catch
             {
-                return;
+                return false;
             }
+        }
+
+
+        /// <summary>
+        /// Moves file from sourceFile to destinationFile.
+        /// </summary>
+        /// <param name="sourceFile">source path of file</param>
+        /// <param name="destinationFile">destination path of file</param>
+        /// <param name="result">result of action: true = success, false = failure</param>
+        /// <returns>string describing the result of function's action.</returns>
+        public string MoveFile(string sourceFile, string destinationFile, out bool result)
+        {
+            try
+            {
+                //overwrite existing file with same name
+                if (File.Exists(destinationFile))
+                {
+                    File.Delete(destinationFile);
+                }
+                File.Move(sourceFile, destinationFile);
+                result = true;
+                return "Moved file from " + sourceFile + " to " + destinationFile;
+            }
+            catch (Exception e)
+            {
+                result = false;
+                return "Could not move file " + sourceFile + " to " + destinationFile + ".\nProblem: " + e.Message;
+            }
+
         }
     }
 }

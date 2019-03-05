@@ -42,8 +42,16 @@
 
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
     function myFunc() {
         window.location.href = '@Url.Action("FinishedAudioRecording", new { id = Model.ID })'; //"UltimatumGame"
     }
+
+    $(document).ready(function () {
+        var error = @((TempData["ErrorMessage"] != null).ToString().ToLower());
+        if (error) {
+            alert("הקלטתך לא נרשמה. אנא נסה שנית. אנא השתדל לדבר בקול רם וברור.");
+        }
+    });
 </script>
