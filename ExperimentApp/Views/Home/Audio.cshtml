@@ -5,6 +5,7 @@
     ViewBag.Title = "Audio";
 }
 
+<p id="msg" style="display:none">@TempData["ErrorMessage"]</p>
 
 <!DOCTYPE html>
 <html>
@@ -47,11 +48,10 @@
     function myFunc() {
         window.location.href = '@Url.Action("FinishedAudioRecording", new { id = Model.ID })'; //"UltimatumGame"
     }
-
     $(document).ready(function () {
         var error = @((TempData["ErrorMessage"] != null).ToString().ToLower());
         if (error) {
-            alert("הקלטתך לא נרשמה. אנא נסה שנית. אנא השתדל לדבר בקול רם וברור.");
+            alert(document.getElementById("msg").innerHTML);
         }
     });
 </script>
