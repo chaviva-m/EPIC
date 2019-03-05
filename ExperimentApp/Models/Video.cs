@@ -148,7 +148,13 @@ namespace ExperimentApp.Models
             {
                 if (groups[emotion].Any()) { count = groups[emotion].Count(); }
                 else { count = 0; }
-                freq = count / vectorLength;
+                if (vectorLength == 0)
+                {
+                    freq = 0;
+                } else
+                {
+                    freq = count / vectorLength;
+                }
                 //add emotion frequency to participant
                 participant.VideoEmotions.Add(new VideoEmotion
                 {
