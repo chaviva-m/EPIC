@@ -42,6 +42,8 @@ namespace ExperimentApp.Models
             participant.VideoDataPath = file;
             string video = "Video" + participant.ID;     // give root directory of where we want to store the data
             participant.VideoPath = video + ".avi";
+            string labeledVideo = "VideoLabels" + participant.ID;
+            participant.VideoWithLabelsPath = labeledVideo + ".avi";
 
             string dataRootDir = HttpContext.Current.Server.MapPath(Path.Combine("~", dataRelDir));
 
@@ -59,8 +61,8 @@ namespace ExperimentApp.Models
                     ProcessStartInfo startInfo = new ProcessStartInfo(processPath)
                     {
                         WindowStyle = ProcessWindowStyle.Minimized,
-                        Arguments = String.Format("{0} {1} {2} {3} {4}", codeDir, python_window,
-                        dataRootDir + file, dataRootDir + video, webcam_window)
+                        Arguments = String.Format("{0} {1} {2} {3} {4} {5}", codeDir, python_window,
+                        dataRootDir + file, dataRootDir + video, dataRootDir + labeledVideo, webcam_window)
                     };
                     //start process
                     using (Process myProcess = Process.Start(startInfo))
