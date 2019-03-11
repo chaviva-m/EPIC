@@ -35,12 +35,10 @@ namespace ExperimentApp.Models
 
         public bool RecordVideo(Participant participant)
         {
-            /*NOTICE: bash file changes directory to emotions.py's root directory. Need to change this.
-             Maybe we can put python project directory in this project so that we can give relative path?*/
 
-            string file = "VideoData" + participant.ID;  // give root directory of where we want to store the data
+            string file = "VideoData" + participant.ID;
             participant.VideoDataPath = file;
-            string video = "Video" + participant.ID;     // give root directory of where we want to store the data
+            string video = "Video" + participant.ID;
             participant.VideoPath = video + ".avi";
             string labeledVideo = "VideoLabels" + participant.ID;
             participant.VideoWithLabelsPath = labeledVideo + ".avi";
