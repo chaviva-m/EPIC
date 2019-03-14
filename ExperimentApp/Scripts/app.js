@@ -19,6 +19,7 @@ stopButton.addEventListener("click", stopRecording);
 
 function startRecording() {
     console.log("recordButton clicked");
+    document.getElementById("rec_msg").style.display = "block";
 	/*
 		Simple constraints object, for more advanced audio features see
 		https://addpipe.com/blog/audio-constraints-getusermedia/
@@ -81,6 +82,7 @@ function stopRecording() {
     //var audFile;
     console.log("stopButton clicked");
     document.getElementById("recordings").style.display = "block";
+    document.getElementById("rec_msg").style.display = "none";
 
     //disable the stop button, enable the record too allow for new recordings
     stopButton.disabled = true;

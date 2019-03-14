@@ -42,7 +42,7 @@ namespace ExperimentApp.Models
         [Required(ErrorMessage = "שדה חובה")]
         [Range(0, 10, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 10")]
         [Display(Name = "הצעה")]
-        public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100; } }
+        public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100;} }
         public float UltimatumGavePercent { get; private set; }
 
         //Trust Game
@@ -51,8 +51,30 @@ namespace ExperimentApp.Models
         [Required(ErrorMessage = "שדה חובה")]
         [Range(0, 10, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 10")]
         [Display(Name = "הצעה")]
-        public int TrustGaveSum { get { return trustGaveSum; }  set { trustGaveSum = value; TrustGavePercent = (trustGaveSum / (float)TrustReceivedSum) * 100; } }
+        public int TrustGaveSum { get { return trustGaveSum; }  set { trustGaveSum = value; TrustGavePercent = (trustGaveSum / (float)TrustReceivedSum) * 100; this.getRewardVal(trustGaveSum); } }
         public float TrustGavePercent { get; private set; }
+        public string trustGotSum;
+        public string TrustGotSum { get { return trustGotSum; } set { trustGotSum = value; } }
+
+        private string totalAward;
+        public string TotalAward { get { return totalAward; } set { totalAward = value; } }
+
+        public void getRewardVal(int trustGave)
+        {
+            trustGave = trustGave * 3;
+            int has = this.UltimatumReceivedSum - this.ultimatumGaveSum;
+            Random random = new Random();
+            int n = random.Next(15 - has, 25 - has);
+            if (n > trustGave)
+            {
+                this.TotalAward = (has + trustGave).ToString();
+                this.TrustGotSum = trustGave.ToString();
+                return;
+            }
+            this.TrustGotSum = n.ToString();
+            this.TotalAward = (has + n).ToString();
+            return;
+        }
 
     }
 }
