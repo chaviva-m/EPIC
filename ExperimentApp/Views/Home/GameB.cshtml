@@ -5,7 +5,10 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <h2></h2>
-<div id="trustInstructions" dir="rtl" lang="he" style="font-size:large">
+<div id="second_game" dir="rtl" lang="he" style="font-size:large" ,"text-align:center">
+    <h1>עוברים למשחק הבא!</h1>
+</div>
+<div id="trustInstructions" dir="rtl" lang="he" style="font-size:large;display:none">
     <h1>משחק שני:</h1>
     <img height="500" src="~/Content/images/trust_instructions.png" style="float:left" ;>
     <div>
@@ -69,6 +72,10 @@
 }
 
 <script>
+    setTimeout(function () {
+        document.getElementById('second_game').style.display = 'none';
+        document.getElementById('trustInstructions').style.display = 'block';
+    }, 2 * 1000);
 
     function show() {
         document.getElementById("waitBtn").disabled = true;

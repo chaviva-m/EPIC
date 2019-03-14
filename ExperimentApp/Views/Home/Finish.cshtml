@@ -1,16 +1,24 @@
-﻿
+﻿@model ExperimentApp.Models.Participant
+@Html.Hidden("TotalAward", Model.TotalAward)
+@Html.Hidden("TrustGotSum", Model.TrustGotSum)
+
 @{
     ViewBag.Title = "Finish";
 }
 
-<div dir="rtl" lang="he">
+<div dir="rtl" lang="he" style="font-size:larger">
     <h2>סיימתם :)</h2>
-    <p style="font-size:larger">אנו מודים לכם על השתתפותכם.</p>
-    <p style="font-size:larger">אנא קראו למפעיל הניסוי.</p>
+    <p> אנו מודים לך על השתתפותך!</p>
+    <p>נא לקרוא למפעיל הניסוי. אין לצאת מדף זה עד להגעתו!</p>
+    <br />
+    <p> תוצאות המשחקים שלך:</p>
+    <p>במשחק הראשון, השחקן השני הסכים להצעתך.</p>
+    @*<p>במשחק השני, השחקן השני בחר לתת לך @Html.DisplayFor(model => model.TrustGotSum) ש"ח. </p>
+    <p style="font-size:xx-large;color:brown">סה"כ, סכום הכסף המגיע לך ממפעיל הניסוי הינו: @Html.DisplayFor(model => model.TotalAward) ש"ח.</p>*@
 </div>
 
 <div dir="rtl" lang="he" style="font-size:large">
-    <br/>
+    <br />
     <p>@Html.ActionLink("חזרה לדף הבית", "Index", "Home")</p>
 </div>
 

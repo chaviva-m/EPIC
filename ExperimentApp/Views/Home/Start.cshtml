@@ -35,7 +35,7 @@
     function show() {
         document.getElementById("playVideo").disabled = true;
         document.getElementById("myGif").style.display = "block";
-        window.location.href = '@Url.Action("Video", "Home", new { id = Model.ID }, null)';
+        window.location.href = '@Url.Action("GameA", "Home", new { id = Model.ID }, null)';
         //GetTransactionBuyingRate();
     }
 

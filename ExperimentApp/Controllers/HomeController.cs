@@ -242,9 +242,18 @@ namespace ExperimentApp.Controllers
             return RedirectToAction("GameA", new { id = participantID });
         }
 
-        public ActionResult Finish()
+        public ActionResult Finish(int? id)
         {
-            return View();
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
+            return View(participant);
         }
 
         public ActionResult Error()
