@@ -24,6 +24,7 @@ namespace ExperimentApp.Models
 
         //emotions from video
         public string VideoPath { get; set; }
+        public string VideoWithLabelsPath { get; set; }
         public string VideoDataPath { get; set; }
         public virtual List<VideoEmotion> VideoEmotions { get; set; }
 
