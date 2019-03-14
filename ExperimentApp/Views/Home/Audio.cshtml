@@ -5,6 +5,7 @@
     ViewBag.Title = "Audio";
 }
 
+<p id="msg" style="display:none">@TempData["ErrorMessage"]</p>
 
 <!DOCTYPE html>
 <html>
@@ -43,8 +44,15 @@
 
 </body>
 </html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <script type="text/javascript">
     function myFunc() {
         window.location.href = '@Url.Action("FinishedAudioRecording", new { id = Model.ID })'; //"UltimatumGame"
     }
+    $(document).ready(function () {
+        var error = @((TempData["ErrorMessage"] != null).ToString().ToLower());
+        if (error) {
+            alert(document.getElementById("msg").innerHTML);
+        }
+    });
 </script>

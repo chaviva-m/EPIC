@@ -35,13 +35,13 @@ namespace ExperimentApp.Models
 
         public bool RecordVideo(Participant participant)
         {
-            /*NOTICE: bash file changes directory to emotions.py's root directory. Need to change this.
-             Maybe we can put python project directory in this project so that we can give relative path?*/
 
-            string file = "VideoData" + participant.ID;  // give root directory of where we want to store the data
+            string file = "VideoData" + participant.ID;
             participant.VideoDataPath = file;
-            string video = "Video" + participant.ID;     // give root directory of where we want to store the data
+            string video = "Video" + participant.ID;
             participant.VideoPath = video + ".avi";
+            string labeledVideo = "VideoLabels" + participant.ID;
+            participant.VideoWithLabelsPath = labeledVideo + ".avi";
 
             string dataRootDir = HttpContext.Current.Server.MapPath(Path.Combine("~", dataRelDir));
 
@@ -59,8 +59,8 @@ namespace ExperimentApp.Models
                     ProcessStartInfo startInfo = new ProcessStartInfo(processPath)
                     {
                         WindowStyle = ProcessWindowStyle.Minimized,
-                        Arguments = String.Format("{0} {1} {2} {3} {4}", codeDir, python_window,
-                        dataRootDir + file, dataRootDir + video, webcam_window)
+                        Arguments = String.Format("{0} {1} {2} {3} {4} {5}", codeDir, python_window,
+                        dataRootDir + file, dataRootDir + video, dataRootDir + labeledVideo, webcam_window)
                     };
                     //start process
                     using (Process myProcess = Process.Start(startInfo))
@@ -148,7 +148,13 @@ namespace ExperimentApp.Models
             {
                 if (groups[emotion].Any()) { count = groups[emotion].Count(); }
                 else { count = 0; }
-                freq = count / vectorLength;
+                if (vectorLength == 0)
+                {
+                    freq = 0;
+                } else
+                {
+                    freq = count / vectorLength;
+                }
                 //add emotion frequency to participant
                 participant.VideoEmotions.Add(new VideoEmotion
                 {
