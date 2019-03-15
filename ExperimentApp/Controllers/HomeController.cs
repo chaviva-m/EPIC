@@ -190,7 +190,7 @@ namespace ExperimentApp.Controllers
             {
                 db.Entry(participant).State = EntityState.Modified;
                 db.SaveChanges();
-                return RedirectToAction("Finish");
+                return RedirectToAction("Finish", new { id = participant.ID });
             }
 
             return View(participant);

@@ -19,7 +19,9 @@ stopButton.addEventListener("click", stopRecording);
 
 function startRecording() {
     console.log("recordButton clicked");
+
     document.getElementById("rec_msg").style.display = "block";
+
 	/*
 		Simple constraints object, for more advanced audio features see
 		https://addpipe.com/blog/audio-constraints-getusermedia/

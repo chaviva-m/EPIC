@@ -10,7 +10,7 @@
         <p>ברוכים הבאים!</p>
         <p>תודה שבאתם להשתתף בניסוי.</p>
         <p>אתם מוזמנים בכל שלב לפנות למפעיל הניסוי אם משהו לא ברור לכם.</p>
-        <p>*ההוראות מנוסחות לעיתים בלשון זכר ולעיתים בלשון נקבה, אך מיועדות לבני שני המינים*</p>
+        <p>*ההוראות מנוסחות לעיתים בלשון זכר ולעיתים בלשון נקבה, אך מיועדות לבני שני המינים</p>
         <br />
         <p>הניסוי בו אתם עומדים להשתתף מורכב ממספר שלבים:</p>
         <p>ראשית תצפו בסרטון, שלאחריו תתבקשו לשתף במשפט אחד או שניים בתחושות שצפו במהלך הצפייה ולמלא שאלון קצר . </p>
@@ -35,70 +35,8 @@
     function show() {
         document.getElementById("playVideo").disabled = true;
         document.getElementById("myGif").style.display = "block";
-        window.location.href = '@Url.Action("GameA", "Home", new { id = Model.ID }, null)';
-        //GetTransactionBuyingRate();
-    }
-
-    @*function GetTransactionBuyingRate() {
-        return $.ajax({
-                    url: '@Url.Action("FormJquery", "Home", new { id = Model.ID })',
-                    dataType: "json",
-                    type: "POST",
-                    success: function (result) {
-                        if (result.returnvalue == true) {
-                            alert("true");
-                            playVideo();
-                        } else {
-                            alert("false");
-                            window.location.href = '@Url.Action("Error", "Home")';
-                        }
-                    }
-                });
-    }
-
-    //video
-    function isFullScreenAvailable() {
-        return (
-            document.fullscreenEnabled ||
-            document.webkitFullscreenEnabled ||
-            document.mozFullScreenEnabled ||
-            document.msFullscreenEnabled
-        );
-    }
-    function requestFullScreen(elementToRequest) {
-        if (elementToRequest.requestFullScreen) {
-            elementToRequest.requestFullScreen();
-        }
-        else if (elementToRequest.webkitRequestFullscreen) {
-            elementToRequest.webkitRequestFullscreen();
-        }
-        else if (elementToRequest.mozRequestFullScreen) {
-            elementToRequest.mozRequestFullScreen();
-        }
-        else if (elementToRequest.msRequestFullscreen) {
-            elementToRequest.msRequestFullscreen();
-        }
-    }
-
-    var videoElement = document.getElementById('videoPlayer');
-    function makeVideoFullScreen() {
-        if (isFullScreenAvailable) {
-            requestFullScreen(videoElement);
-            return;
-        }
-        alert("Sorry full screen is not available in this browser");
-    }
-    function playVideo() {
-        document.getElementById("myGif").style.display = "none";
-        document.getElementById("videoPlayer").style.display = "block";
-        makeVideoFullScreen()
-        videoElement.play();
-        return;
-    }
-    videoElement.addEventListener('ended', myHandler, false);
-    function myHandler(e) {
-        window.location.href = '@Url.Action("EndVideoRecording")';
-    }*@  
+        window.location.href = '@Url.Action("Video", "Home", new { id = Model.ID }, null)';
+    } 
 </script>
 
 
