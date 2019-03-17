@@ -10,7 +10,7 @@ namespace ExperimentApp.Infrastructure
         public static List<string> SelfReportEmotions { get; set; } = new List<string>
         {
             "Apathy אדישות", "Sadness עצב", "Calm רוגע",
-            "Amusement בידור","Pain כאב", "Happinness שמחה",
+            "Amusement בידור","Pain כאב", "Happiness שמחה",
         };
     }
 }
