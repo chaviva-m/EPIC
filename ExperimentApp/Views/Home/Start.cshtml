@@ -7,7 +7,6 @@
 <div>
     <br />
     <div style="font-size:large" dir="rtl" lang="he">
-        <p>ברוכים הבאים!</p>
         <p>תודה שבאתם להשתתף בניסוי.</p>
         <p>אתם מוזמנים בכל שלב לפנות למפעיל הניסוי אם משהו לא ברור לכם.</p>
         <p>*ההוראות מנוסחות לעיתים בלשון זכר ולעיתים בלשון נקבה, אך מיועדות לבני שני המינים.</p>
@@ -35,7 +34,7 @@
     function show() {
         document.getElementById("playVideo").disabled = true;
         document.getElementById("myGif").style.display = "block";
-        window.location.href = '@Url.Action("Video", "Home", new { id = Model.ID }, null)';
+        window.location.href = '@Url.Action("GameA", "Home", new { id = Model.ID }, null)';
     } 
 </script>
 

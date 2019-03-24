@@ -28,6 +28,11 @@ namespace ExperimentApp.Models
         public string VideoDataPath { get; set; }
         public virtual List<VideoEmotion> VideoEmotions { get; set; }
 
+        //emotions from baseline audio
+        public string AudioBaselinePath { get; set; }
+        public string AudioBaselineDataPath { get; set; }
+        public virtual List<AudioBaselineEmotion> AudioBaselineEmotions { get; set; } = new List<AudioBaselineEmotion>();
+
         //emotions from audio
         public string AudioPath { get; set; }
         public string AudioDataPath { get; set; }
@@ -42,8 +47,10 @@ namespace ExperimentApp.Models
         [Required(ErrorMessage = "שדה חובה")]
         [Range(0, 10, ErrorMessage = "יש להכניס מספר שלם בין 0 ל 10")]
         [Display(Name = "הצעה")]
-        public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100;} }
+        public int UltimatumGaveSum { get { return ultimatumGaveSum; } set { ultimatumGaveSum = value; UltimatumGavePercent = (ultimatumGaveSum / (float)UltimatumReceivedSum) * 100; } }
         public float UltimatumGavePercent { get; private set; }
+        public float UltimatumInstructionReadTime { get; set; }
+        public float UltimatumDMtime { get; set; }
 
         //Trust Game
         public int TrustReceivedSum { get; } = 10;
@@ -55,6 +62,8 @@ namespace ExperimentApp.Models
         public float TrustGavePercent { get; private set; }
         public string trustGotSum;
         public string TrustGotSum { get { return trustGotSum; } set { trustGotSum = value; } }
+        public float TrustInstructionReadTime { get; set; }
+        public float TrustDMtime { get; set; }
 
         private string totalAward;
         public string TotalAward { get { return totalAward; } set { totalAward = value; } }

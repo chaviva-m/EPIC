@@ -1,0 +1,56 @@
+﻿@model ExperimentApp.Models.Participant
+@Scripts.Render("~/Scripts/app.js")
+@{
+    ViewBag.Title = "BaselineAudio";
+}
+
+<p id="msg" style="display:none">@TempData["ErrorMessage"]</p>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="pragma" content="no-cache" charset="UTF-8">
+    <title></title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body dir="rtl" lang="he" style="font-size:large">
+    <center><h1>לפני שמתחילים</h1></center>
+    <p>על מנת לוודא שהמערכת עובדת כראוי, נבקשך להקליט את המשפט הבא:</p>
+    <br />
+    <p style="color:cornflowerblue"><b>"מערכת השמש נוצרה לפני כ־4.6 מיליארד שנה, והיא אחת משש הזרועות של גלקסיית שביל החלב."</b></p>
+    <br />
+    <p>לתחילת ההקלטה, יש ללחוץ "הקלט" ולסיום "עצור".</p>
+    <br />
+    <p id="rec_msg" disabled style="display:none">מקליט...</p>
+    <div id="controls">
+        <button id="recordButton">הקלט</button>
+        <button id="pauseButton" disabled style="display:none">Pause</button>
+        <button id="stopButton" disabled>עצור</button>
+        <h1 id="fileName" style="display:none">@Model.AudioBaselinePath</h1>
+    </div>
+    <div id="formats" disabled style="display:none">Format: start recording to see sample rate</div>
+    <h3 style="display:none" id="recordings">הקלטות:</h3>
+    <ol id="recordingsList"></ol>
+
+
+    <!-- inserting these scripts at the end to be able to use all the elements in the DOM -->
+    <script src="~/Scripts/Recorder.js"></script>
+    <script src="~/Scripts/app.js"></script>
+
+</body>
+</html>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script type="text/javascript">
+    function myFunc() {
+        window.location.href = '@Url.Action("FinishedBaselineAudioRecording", new { id = Model.ID })';
+    }
+    $(document).ready(function () {
+        var error = @((TempData["ErrorMessage"] != null).ToString().ToLower());
+        if (error) {
+            alert(document.getElementById("msg").innerHTML);
+        }
+    });
+</script>
+
+

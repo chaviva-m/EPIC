@@ -4,9 +4,7 @@
 }
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 <html>
-@*<head>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-</head>*@
+
 <body>
 
     <h2></h2>
@@ -44,15 +42,16 @@
         </div>
     </div>
 
-    <center id="waitPage" style="display:none" align="middle">
-        <img id="waitingGif1" height="200" ; src="~/Content/Gifs/waiting.gif">
-        <p dir="rtl" lang="he" id="msg1">מחכים להחלטת השחקן השני...</p>
-    </center>
     <div id="youStart" style="display:none" dir="rtl" lang="he">
         <h1 style="color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
         <b style="font-size:large">יש ברשותך 10 שקלים</b>
         <br />
     </div>
+    <center id="waitPage" style="display:none" align="middle">
+        <img id="waitingGif1" height="200" ; src="~/Content/Gifs/waiting.gif">
+        <p dir="rtl" lang="he" id="msg1">מחכים להחלטת השחקן השני...</p>
+    </center>
+
 
 
     @using (Html.BeginForm())
@@ -66,6 +65,8 @@
         @Html.HiddenFor(model => model.VideoDataPath)
         @Html.HiddenFor(model => model.AudioPath)
         @Html.HiddenFor(model => model.AudioDataPath)
+        @Html.HiddenFor(model => model.UltimatumInstructionReadTime)
+        @Html.HiddenFor(model => model.UltimatumDMtime)
 
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div id="inputField">
@@ -91,19 +92,28 @@
 </html>
 <script>
 
+    var instBegin;
+    var instEnd;
+    var gameBegin;
+    var gameEnd;
+    //The player pressed a button that he is ready to start the game. A loading gif will show.
     function show() {
+        instEnd = Math.floor(Date.now() / 1000);  //time player indicated he was ready to start, seconds
+        document.getElementById('UltimatumInstructionReadTime').value = instEnd - instBegin;
         document.getElementById("waitBtn").disabled = true;
         document.getElementById("myGif").style.display = "block";
         document.getElementById("msg").style.display = "block";
         setTimeout("hide()", 2000);  // 5 seconds
     }
 
+    //the loading gif is over. Player need to decide how much money to give.
     function hide() {
         document.getElementById("myGif").style.display = "none";
         document.getElementById("msg").style.display = "none";
         document.getElementById("youStart").style.display = "block";
         document.getElementById("subForm").style.display = "block";
         document.getElementById("waitBtn").style.display = "none";
+        gameBegin = Math.floor(Date.now() / 1000);  //decision-making part starts.
         }
 
     function showUltiInstructions() {
@@ -116,6 +126,7 @@
     function hideUltiInstructions() {
         document.getElementById("generalInstructions").style.display = "none";
         document.getElementById("ultiInstructions").style.display = "block";
+        instBegin = Math.floor(Date.now() / 1000);  //time instructions began, seconds
     }
 
     $(window).load(function () {
@@ -125,14 +136,16 @@
             if (el < 0 || el > @Model.UltimatumReceivedSum || Math.floor(el) != el || el == "" || el.length == 0 || el == null) {
                 alert("נא להזין מספר שלם בין 0 ל 10 ");
                 return false;
-            }else
+            } else 
             $('#ultiInstructions').hide();
             $('#inputField').hide();
             $('#youStart').hide();
             $('#waitPage').show();
+            gameEnd = Math.floor(Date.now() / 1000);
+            document.getElementById('UltimatumDMtime').value = gameEnd - gameBegin;
             setTimeout(function () {
                 submit = true;
-                $("#submit").trigger("click"); // if you want            
+                $("#submit").trigger("click"); // if you want
             }, 5000);
             if (!submit)
                 e.preventDefault();

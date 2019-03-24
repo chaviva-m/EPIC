@@ -26,6 +26,51 @@ namespace ExperimentApp.Controllers
             return View();
         }
 
+        public ActionResult BaselineAudio(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
+            //add audio file name
+            participant.AudioBaselinePath = "AudioBaseline" + participant.ID + ".wav";
+            db.Entry(participant).State = EntityState.Modified;
+            db.SaveChanges();
+            return View(participant);
+        }
+
+        public ActionResult FinishedBaselineAudioRecording(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Participant participant = db.Participants.Find(id);
+            if (participant == null)
+            {
+                return HttpNotFound();
+            }
+            bool result = audioModel.RunVokaturi(participant);
+            if (result)
+            {
+                //save emotions in database
+                result = audioModel.GetEmotionsFromFile(participant);
+                if (!result)
+                {
+                    TempData["ErrorMessage"] = "הקלטתך לא נרשמה. אנא נסה שנית. אנא השתדל לדבר בקול רם וברור.";
+                    return RedirectToAction("Start", new { id = participant.ID });
+                }
+            }
+            db.Entry(participant).State = EntityState.Modified;
+            db.SaveChanges();
+            return RedirectToAction("SelfReport", new { id = participant.ID });
+        }
+
         [HttpGet]
         public ActionResult Start(int? id)
         {

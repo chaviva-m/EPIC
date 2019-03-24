@@ -152,6 +152,7 @@
     <Compile Include="Infrastructure\EmotionalContent.cs" />
     <Compile Include="Infrastructure\Emotions.cs" />
     <Compile Include="Models\Audio.cs" />
+    <Compile Include="Models\AudioBaselineEmotion.cs" />
     <Compile Include="Models\AudioEmotion.cs" />
     <Compile Include="Models\Participant.cs" />
     <Compile Include="Models\SelfReportEmotion.cs" />
@@ -237,6 +238,7 @@
     <Content Include="Views\Home\SelfReport.cshtml" />
     <Content Include="Views\Home\Finish.cshtml" />
     <Content Include="Views\Home\Error.cshtml" />
+    <Content Include="Views\Home\BaselineAudio.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Data\Audio\" />

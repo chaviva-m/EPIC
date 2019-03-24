@@ -57,7 +57,7 @@ namespace ExperimentApp.Controllers
                 {
                     db.Participants.Add(participant);
                     db.SaveChanges();
-                    return RedirectToAction("Start", "Home", new { id = participant.ID });
+                    return RedirectToAction("BaselineAudio", "Home", new { id = participant.ID });
                 }
             } catch(DataException e)
             {

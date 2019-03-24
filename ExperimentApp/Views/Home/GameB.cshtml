@@ -46,38 +46,50 @@
     @Html.HiddenFor(model => model.AudioPath)
     @Html.HiddenFor(model => model.AudioDataPath)
     @Html.HiddenFor(model => model.UltimatumGaveSum)
+    @Html.HiddenFor(model => model.UltimatumInstructionReadTime)
+    @Html.HiddenFor(model => model.UltimatumDMtime)
+    @Html.HiddenFor(model => model.TrustInstructionReadTime)
+    @Html.HiddenFor(model => model.TrustDMtime)
 
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-<div id="inputField">
-    <div id="youStart" style="display:none" dir="rtl" lang="he">
-        <h1 style="color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
-        <b style="font-size:large">יש ברשותך 10 שקלים</b>
-        <br />
-    </div>
+    <div id="inputField">
+        <div id="youStart" style="display:none" dir="rtl" lang="he">
+            <h1 style="color:red;font-size:x-large">נבחרת להיות השחקן הראשון!</h1>
+            <b style="font-size:large">יש ברשותך 10 שקלים</b>
+            <br />
+        </div>
 
-    <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
-        <legend>כמה כסף ברצונך להציע?</legend>
-        <div>
-            <label for="proposal">סכום בש"ח (מספר שלם בין 0 ל- 10 ) </label>
-        </div>
-        <div class="editor field">
-            @Html.TextBoxFor(model => model.TrustGaveSum, new { id = "propId" })
-        </div>
-        <div>
-            <label>&nbsp;</label>
-            <input id="submit" type="submit" value="Submit" class="submit" />
-        </div>
-    </fieldset>
-</div>
+        <fieldset id="subForm" style="display:none" dir="rtl" lang="he">
+            <legend>כמה כסף ברצונך להציע?</legend>
+            <div>
+                <label for="proposal">סכום בש"ח (מספר שלם בין 0 ל- 10 ) </label>
+            </div>
+            <div class="editor field">
+                @Html.TextBoxFor(model => model.TrustGaveSum, new { id = "propId" })
+            </div>
+            <div>
+                <label>&nbsp;</label>
+                <input id="submit" type="submit" value="Submit" class="submit" />
+            </div>
+        </fieldset>
+    </div>
 }
 
 <script>
+    var instBegin;
+    var instEnd;
+    var gameBegin;
+    var gameEnd;
+
     setTimeout(function () {
         document.getElementById('second_game').style.display = 'none';
         document.getElementById('trustInstructions').style.display = 'block';
+        instBegin = Math.floor(Date.now() / 1000);  //time instructions began, seconds
     }, 2 * 1000);
 
     function show() {
+        instEnd = Math.floor(Date.now() / 1000);  //time player indicated he was ready to start, seconds
+        document.getElementById('TrustInstructionReadTime').value = instEnd - instBegin;
         document.getElementById("waitBtn").disabled = true;
         document.getElementById("myGif").style.display = "block";
         document.getElementById("msg").style.display = "block";
@@ -90,7 +102,7 @@
         document.getElementById("subForm").style.display = "block";
         document.getElementById("youStart").style.display = "block";
         document.getElementById("waitBtn").style.display = "none"
-
+        gameBegin = Math.floor(Date.now() / 1000);  //decision-making part starts.
     }
 
    $(window).load(function () {
@@ -104,9 +116,11 @@
             $('#trustInstructions').hide();
             $('#inputField').hide();
             $('#waitPage').show();
+            gameEnd = Math.floor(Date.now() / 1000);
+            document.getElementById('TrustDMtime').value = gameEnd - gameBegin;
             setTimeout(function () {
                 submit = true;
-                $("#submit").trigger("click"); // if you want            
+                $("#submit").trigger("click"); // if you want
             }, 5000);
             if (!submit)
                 e.preventDefault();
