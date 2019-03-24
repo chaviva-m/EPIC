@@ -1,6 +1,4 @@
 ﻿@model ExperimentApp.Models.Participant
-@Html.Hidden("TotalAward", Model.TotalAward)
-@Html.Hidden("TrustGotSum", Model.TrustGotSum)
 
 @{
     ViewBag.Title = "Finish";
@@ -13,8 +11,8 @@
     <br />
     <p> תוצאות המשחקים שלך:</p>
     <p>במשחק הראשון, השחקן השני הסכים להצעתך.</p>
-    @*<p>במשחק השני, השחקן השני בחר לתת לך @Html.DisplayFor(model => model.TrustGotSum) ש"ח. </p>
-    <p style="font-size:xx-large;color:brown">סה"כ, סכום הכסף המגיע לך ממפעיל הניסוי הינו: @Html.DisplayFor(model => model.TotalAward) ש"ח.</p>*@
+    <p>במשחק השני, השחקן השני בחר לתת לך @Html.DisplayFor(model => model.TrustGotSum) ש"ח. </p>
+    <p style="font-size:xx-large;color:brown">סה"כ, סכום הכסף המגיע לך ממפעיל הניסוי הינו: @Html.DisplayFor(model => model.TotalAward) ש"ח.</p>
 </div>
 
 <div dir="rtl" lang="he" style="font-size:large">

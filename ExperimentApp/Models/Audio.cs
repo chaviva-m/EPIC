@@ -83,7 +83,8 @@ namespace ExperimentApp.Models
             string audioRelPathDest = dataRelDir + '\\' + participant.AudioPath;
             string audioPathDest = HttpContext.Current.Server.MapPath(Path.Combine("~", audioRelPathDest));
             //move audio file in Data folder
-            MoveFile(audioPathSource, audioPathDest, out bool result);
+            bool result;
+            MoveFile(audioPathSource, audioPathDest, out result);
 
             //audio data file
             string fileRelPath = dataRelDir + '\\' + participant.AudioDataPath;
